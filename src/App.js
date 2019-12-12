@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import './App.css';
-import { Layout, Button, Carousel, Modal } from 'antd';
+import { Layout, Button, Carousel } from 'antd';
 import event1 from './images/event1.jpg';
 import event2 from './images/event2.jpg';
 import event3 from './images/event3.jpg';
 import event4 from './images/event4.jpg';
 import EventList from './components/events/EventList';
 import RegisterForm from './components/form/RegisterForm';
+import LoginForm from './components/form/LoginForm';
 
 class App extends Component {
 	state = {
@@ -37,14 +38,6 @@ class App extends Component {
 				description: 'this is a event'
 			}
 		],
-		visible: false
-	};
-
-	toggleModal = () => {
-		console.log('hello');
-		this.setState({
-			visible: !this.state.visible
-		});
 	};
 
 	render() {
@@ -57,9 +50,9 @@ class App extends Component {
 							<Button type="primary" className="header-button">
 								Sign In
 							</Button>
-							<Button className="header-button sign-up" onClick={this.toggleModal}>
+							<button className="header-button sign-up">
 								Register
-							</Button>
+							</button>
 							<Button type="primary" className="header-button">
 								Create Event
 							</Button>
@@ -87,9 +80,8 @@ class App extends Component {
 						<EventList events={this.state.events} />
 					</section>
 				</Layout>
-				<Modal visible={this.state.visible} footer={null} onCancel={this.toggleModal}>
 					<RegisterForm />
-				</Modal>
+				<LoginForm />
 			</div>
 		);
 	}

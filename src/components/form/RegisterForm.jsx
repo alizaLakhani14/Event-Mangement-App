@@ -1,60 +1,139 @@
-import React, { Component } from 'react';
-import { Form, Icon, Input, Button, Checkbox } from 'antd';
+import React from "react";
+import { Formik } from "formik";
+import * as Yup from "yup";
+import { Input, Button } from "antd";
+import "./RegisterForm.css";
 
-class RegisterForm extends Component {
-	handleSubmit = (e) => {
-		console.log(e);
-		e.preventDefault();
-		this.props.form.validateFields((err, values) => {
-			if (!err) {
-				console.log('Received values of form: ', values);
-			}
-		});
-	};
+const validationSchema = Yup.object().shape({
+  name: Yup.string()
+    .required("Must enter your name")
+    .min(6, "too short"),
+  contact: Yup.number().required("Must give number"),
+  email: Yup.string()
+    .required("Must give email")
+    .email("Invalid Email"),
+  password: Yup.string()
+    .required("Enter your Password")
+    .min(8, "Too short"),
+  confirmPassword: Yup.string().when("password", {
+    is: val => (val && val.length > 0 ? true : false),
+    then: Yup.string().oneOf(
+      [Yup.ref("password")],
+      "Both password need to be the same"
+    )
+  })
+});
 
-	render() {
-		const { getFieldDecorator } = this.props.form;
-		return (
-			<Form onSubmit={this.handleSubmit} className="login-form">
-				<Form.Item>
-					{getFieldDecorator('username', {
-						rules: [ { required: true, message: 'Please input your username!' } ]
-					})(
-						<Input
-							prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-							placeholder="Username"
-						/>
-					)}
-				</Form.Item>
-				<Form.Item>
-					{getFieldDecorator('password', {
-						rules: [ { required: true, message: 'Please input your Password!' } ]
-					})(
-						<Input
-							prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-							type="password"
-							placeholder="Password"
-						/>
-					)}
-				</Form.Item>
-				<Form.Item>
-					{getFieldDecorator('remember', {
-						valuePropName: 'checked',
-						initialValue: true
-					})(<Checkbox>Remember me</Checkbox>)}
-					<a className="login-form-forgot" href="">
-						Forgot password
-					</a>
-					<Button type="primary" htmlType="submit" className="login-form-button">
-						Register
-					</Button>
-					Or <a href="">register now!</a>
-				</Form.Item>
-			</Form>
-		);
-	}
-}
-
-const RegisterForm = Form.create({ name: 'normal_login' })(NormalLoginForm);
+const RegisterForm = () => {
+  return (
+    <Formik
+      initialValues={{
+        name: "",
+        contact: "",
+        email: "",
+        password: "",
+        confirmPassword: ""
+      }}
+      validationSchema={validationSchema}
+      onSubmit={values => {
+        console.log("submitted");
+        console.log(values);
+      }}
+    >
+      {({
+        values,
+        errors,
+        touched,
+        handleChange,
+        handleBlur,
+        handleSubmit,
+        isSubmitting
+      }) => (
+        <form className='form'>
+          <div className="form-field">
+            <label htmlFor="name">Name</label>
+            <Input
+              type="text"
+              placeholder="Enter your name"
+              id="name"
+              name="name"
+              onChange={handleChange}
+              value={values.name}
+              onBlur={handleBlur}
+            />
+            {errors.name && touched.name ? (
+              <div className="Error-message">{errors.name}</div>
+            ) : null}
+          </div>
+          <div className="form-field">
+            <label htmlFor="contact">Contact</label>
+            <Input
+              type="number"
+              placeholder="Enter contact Number"
+              id="contact"
+              name="contact"
+              onChange={handleChange}
+              value={values.contact}
+              onBlur={handleBlur}
+            />
+            {errors.contact && touched.contact ? (
+              <div className="Error-message">{errors.contact}</div>
+            ) : null}
+          </div>
+          <div className="form-field">
+            <label htmlFor="email">Email</label>
+            <Input
+              type="email"
+              placeholder="Enter Email Address"
+              id="email"
+              name="email"
+              onChange={handleChange}
+              value={values.email}
+              onBlur={handleBlur}
+            />
+            {errors.email && touched.email ? (
+              <div className="Error-message">{errors.email}</div>
+            ) : null}
+          </div>
+          <div className="form-field">
+            <label htmlFor="password">Password</label>
+            <Input.Password
+              type="password"
+              placeholder="Enter your password"
+              id="password"
+              name="password"
+              onChange={handleChange}
+              value={values.password}
+              onBlur={handleBlur}
+            />
+            {errors.password && touched.password ? (
+              <div className="Error-message">{errors.password}</div>
+            ) : null}
+          </div>
+          <div className="form-field">
+            <label htmlFor="password">Confirm Password</label>
+            <Input.Password
+              type="password"
+              placeholder="Enter the confirmed password"
+              id="confirmPassword"
+              name="confirmPassword"
+              onChange={handleChange}
+              value={values.confirmPassword}
+              onBlur={handleBlur}
+            />
+            {errors.confirmPassword ? (
+              <div className="Error-message">{errors.confirmPassword}</div>
+            ) : null}
+          </div>
+          <div className="form-field Button">
+            <Button type="primary" onClick={handleSubmit}>
+              Submit
+            </Button>
+          </div>
+        </form>
+      )}
+    </Formik>
+  );
+};
 
 export default RegisterForm;

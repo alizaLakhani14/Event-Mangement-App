@@ -51,4 +51,13 @@ img {
 	background-color: #f13a59;
 	color: white;
 	border: none;
+	border-radius: 4px;
+	height: 32px;
+	padding: 0 15px;
+	outline: none;
+	border:none;
+}
+
+.sign-up:hover{
+	cursor: pointer;
 }
