@@ -33,48 +33,50 @@ const LoginForm = () => {
           handleSubmit,
           isSubmitting
         }) => (
-          <form className="form">
-            <div className="form-field">
-              <label htmlFor="email">Email Address</label>
-              <Input
-                name="email"
-                id="email"
-                onChange={handleChange}
-                value={values.email}
-                onBlur={handleBlur}
-              ></Input>
-              {errors.email && touched.email ? (
-                <div className="Error-message">{errors.email}</div>
-              ) : null}
-            </div>
-            <div className="form-field">
-              <label htmlFor="password">Password</label>
-              <Input.Password
-                name="password"
-                id="password"
-                onChange={handleChange}
-                value={values.password}
-                onBlur={handleBlur}
-              ></Input.Password>
-              {errors.password && touched.password ? (
-                <div className="Error-message">{errors.password}</div>
-              ) : null}
-            </div>
-            <div className="form-field">
-              <Button type="primary" onClick={handleSubmit}>
-                Login
-              </Button>
-            </div>
-            <div className="partition">
-              <hr></hr>
-              <span className="partition-span">OR</span>
-              <hr></hr>
-            </div>
-            <button className="login-button-google">
-              <Icon type="google" className='google-icon' />
-              Login with Google
-            </button>
-          </form>
+          <div className="login-form-container">
+            <form className="form">
+              <div className="form-field">
+                <label htmlFor="email">Email Address</label>
+                <Input
+                  name="email"
+                  id="email"
+                  onChange={handleChange}
+                  value={values.email}
+                  onBlur={handleBlur}
+                ></Input>
+                {errors.email && touched.email ? (
+                  <div className="Error-message">{errors.email}</div>
+                ) : null}
+              </div>
+              <div className="form-field">
+                <label htmlFor="password">Password</label>
+                <Input.Password
+                  name="password"
+                  id="password"
+                  onChange={handleChange}
+                  value={values.password}
+                  onBlur={handleBlur}
+                ></Input.Password>
+                {errors.password && touched.password ? (
+                  <div className="Error-message">{errors.password}</div>
+                ) : null}
+              </div>
+              <div className="form-field">
+                <Button type="primary" onClick={handleSubmit}>
+                  Login
+                </Button>
+              </div>
+              <div className="partition">
+                <hr></hr>
+                <span className="partition-span">OR</span>
+                <hr></hr>
+              </div>
+              <button className="login-button-google">
+                <Icon type="google" className="google-icon" />
+                Login with Google
+              </button>
+            </form>
+          </div>
         )}
       </Formik>
     </div>

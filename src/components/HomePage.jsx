@@ -7,10 +7,9 @@ import event2 from "./../images/event2.jpg";
 import event3 from "./../images/event3.jpg";
 import event4 from "./../images/event4.jpg";
 import EventList from "./events/EventList";
-// import RegisterForm from "./form/RegisterForm";
-// import LoginForm from "./form/LoginForm";
-import {NavLink} from 'react-router-dom';
-
+import RegisterForm from "./form/RegisterForm";
+import LoginForm from "./form/LoginForm";
+import { NavLink } from "react-router-dom";
 
 class HomePage extends Component {
   state = {
@@ -49,10 +48,14 @@ class HomePage extends Component {
           <header>
             <h1>LAKHANI EVENTS</h1>
             <div className="buttons">
-              <Button type="primary" className="header-button">
-                Sign In
-              </Button>
-              <button className="header-button sign-up">Register</button>
+              <NavLink to="/login">
+                <Button type="primary" className="header-button">
+                  Sign In
+                </Button>
+              </NavLink>
+              <NavLink to="/register">
+                <button className="header-button sign-up">Register</button>
+              </NavLink>
               <Button type="primary" className="header-button">
                 Create Event
               </Button>

@@ -1,18 +1,20 @@
-.form-field{
-margin:1em;
+.form-field {
+  margin: 1em;
 }
 
- .Error-message{
-     color:#f13a59;
-     margin:2px;
- }
+.Error-message {
+  color: #f13a59;
+  margin: 2px;
+}
 
- label{
-     color:#f13a59;
-     font-weight: bold;
- }
+label {
+  color: #f13a59;
+  font-weight: bold;
+}
 
-
-
-
- 
+.register-form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
