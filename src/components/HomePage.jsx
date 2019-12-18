@@ -7,40 +7,10 @@ import event2 from "./../images/event2.jpg";
 import event3 from "./../images/event3.jpg";
 import event4 from "./../images/event4.jpg";
 import EventList from "./events/EventList";
-import RegisterForm from "./form/RegisterForm";
-import LoginForm from "./form/LoginForm";
 import { NavLink } from "react-router-dom";
+import CreateEvent from "./form/CreateEvent";
 
 class HomePage extends Component {
-  state = {
-    events: [
-      {
-        title: "event1",
-        description: "this is a event"
-      },
-      {
-        title: "event1",
-        description: "this is a event"
-      },
-      {
-        title: "event1",
-        description: "this is a event"
-      },
-      {
-        title: "event1",
-        description: "this is a event"
-      },
-      {
-        title: "event1",
-        description: "this is a event"
-      },
-      {
-        title: "event1",
-        description: "this is a event"
-      }
-    ]
-  };
-
   render() {
     return (
       <div className="App">
@@ -56,9 +26,11 @@ class HomePage extends Component {
               <NavLink to="/register">
                 <button className="header-button sign-up">Register</button>
               </NavLink>
-              <Button type="primary" className="header-button">
-                Create Event
-              </Button>
+              <NavLink to="/createEvent">
+                <Button type="primary" className="header-button">
+                  Create Event
+                </Button>
+              </NavLink>
             </div>
           </header>
 
@@ -80,11 +52,10 @@ class HomePage extends Component {
           </section>
           <section className="events-list">
             <h1>Events</h1>
-            <EventList events={this.state.events} />
+            <EventList />
           </section>
         </Layout>
-        {/* <RegisterForm />
-				<LoginForm /> */}
+        <CreateEvent />
       </div>
     );
   }
