@@ -1,26 +1,28 @@
+import { useHistory } from "react-router-dom";
 import React from "react";
 import { Input } from "antd";
 import { Formik } from "formik";
 import "./CreateEvent.css";
 import { connect } from "react-redux";
-import Action from "./../../actions/index";
+import { createEvent } from "./../../actions";
 const { TextArea } = Input;
 
 const CreateEvent = props => {
-  console.log(props.createEvent)
+  let history = useHistory();
+  console.log(props);
   return (
     <Formik
       initialValues={{
-        eventName: "",
+        name: "",
         maxMembers: "",
         description: "",
         price: "",
         contactNumber: ""
       }}
       onSubmit={values => {
-         return props.createEvent(values)
-        console.log(values);
-        // props.createEvent(values);
+        history.push("/");
+        console.log(values)
+        return props.createEvent(values);
       }}
     >
       {({ values, errors, handleChange, handleSubmit, isSubmitting }) => (
@@ -31,8 +33,8 @@ const CreateEvent = props => {
               <Input
                 type="text"
                 placeholder="Event name"
-                id="eventName"
-                name="eventName"
+                id="name"
+                name="name"
                 onChange={handleChange}
               ></Input>
             </div>
@@ -87,10 +89,14 @@ const CreateEvent = props => {
   );
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    createEvent: event => dispatch(Action(event))
-  };
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     createEvent: event => dispatch(createEvent(event))
+//   };
+// };
+
+const mapDispatchToProps = {
+  createEvent
 };
 
 export default connect(null, mapDispatchToProps)(CreateEvent);

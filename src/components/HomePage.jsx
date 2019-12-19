@@ -55,7 +55,7 @@ class HomePage extends Component {
             <EventList />
           </section>
         </Layout>
-        <CreateEvent />
+        {/* <CreateEvent /> */}
       </div>
     );
   }
