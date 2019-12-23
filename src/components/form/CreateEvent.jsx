@@ -22,7 +22,7 @@ const CreateEvent = props => {
       onSubmit={values => {
         history.push("/");
         console.log(values)
-        return props.createEvent(values);
+        props.createEvent(values);
       }}
     >
       {({ values, errors, handleChange, handleSubmit, isSubmitting }) => (
@@ -78,7 +78,7 @@ const CreateEvent = props => {
               ></Input>
             </div>
             <div className="form-field">
-              <button className="create-event-button" onClick={handleSubmit}>
+              <button className="create-event-button" onClick={handleSubmit} type='submit'>
                 Create Event
               </button>
             </div>

@@ -1,8 +1,11 @@
+// import { useHistory } from "react-router-dom";
 import React from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { Input, Button } from "antd";
 import "./RegisterForm.css";
+import { register } from "./../../actions/index";
+import { connect } from "react-redux";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string()
@@ -24,7 +27,8 @@ const validationSchema = Yup.object().shape({
   })
 });
 
-const RegisterForm = () => {
+const RegisterForm = props => {
+  // let history = useHistory();
   return (
     <Formik
       initialValues={{
@@ -36,8 +40,8 @@ const RegisterForm = () => {
       }}
       validationSchema={validationSchema}
       onSubmit={values => {
-        console.log("submitted");
-        console.log(values);
+        // props.loggedIn === true && history.push("/");
+        props.register(values);
       }}
     >
       {({
@@ -138,4 +142,18 @@ const RegisterForm = () => {
   );
 };
 
-export default RegisterForm;
+const mapStateToProps = state => {
+  return {
+    loggegIn: state.auth.loggedIn
+  };
+};
+
+const mapDisptachToProps = dispatch => {
+  return {
+    register: newUser => {
+      dispatch(register(newUser));
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDisptachToProps)(RegisterForm);

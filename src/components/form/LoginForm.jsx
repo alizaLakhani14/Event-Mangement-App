@@ -1,8 +1,12 @@
+import { useHistory } from "react-router-dom";
 import React from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { Input, Button, Icon } from "antd";
 import "./LoginForm.css";
+import { signIn, signInWithGoogle } from "./../../actions";
+import { connect } from "react-redux";
+import { Alert } from "antd";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
@@ -11,7 +15,8 @@ const validationSchema = Yup.object().shape({
   password: Yup.string().required("Enter your password")
 });
 
-const LoginForm = () => {
+const LoginForm = props => {
+  console.log(props);
   return (
     <div>
       <Formik
@@ -21,7 +26,8 @@ const LoginForm = () => {
         }}
         validationSchema={validationSchema}
         onSubmit={values => {
-          console.log(values);
+          props.signIn(values);
+          props.authError === null && props.history.push("/");
         }}
       >
         {({
@@ -34,7 +40,7 @@ const LoginForm = () => {
           isSubmitting
         }) => (
           <div className="login-form-container">
-            <form className="form">
+            <form className="form" onSubmit={handleSubmit}>
               <div className="form-field">
                 <label htmlFor="email">Email Address</label>
                 <Input
@@ -71,7 +77,12 @@ const LoginForm = () => {
                 <span className="partition-span">OR</span>
                 <hr></hr>
               </div>
-              <button className="login-button-google">
+              <button
+                className="login-button-google"
+                onClick={() => {
+                  props.signInWithGoogle("google");
+                }}
+              >
                 <Icon type="google" className="google-icon" />
                 Login with Google
               </button>
@@ -79,8 +90,27 @@ const LoginForm = () => {
           </div>
         )}
       </Formik>
+      {/* {props.authError && (
+        <Alert type="error" message="Invalid Email or Password"></Alert>
+      )} */}
     </div>
   );
 };
 
-export default LoginForm;
+const mapStateToProps = state => {
+  return {
+    authError: state.auth.authError
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    signIn: creds => {
+      dispatch(signIn(creds));
+    },
+    signInWithGoogle: provider => {
+      dispatch(signInWithGoogle(provider));
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

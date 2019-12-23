@@ -1,6 +1,6 @@
 import firebase from "firebase/app";
 import "firebase/firestore";
-
+import "firebase/auth"
 const config = {
   apiKey: "AIzaSyCy_0S_rsb8MQJRuEAUwB-YME-4Nl6nEFw",
   authDomain: "event-management-app-9f3ab.firebaseapp.com",
@@ -12,5 +12,6 @@ const config = {
 };
 
 firebase.initializeApp(config);
+firebase.firestore();
 
 export default firebase;

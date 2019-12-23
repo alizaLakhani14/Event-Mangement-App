@@ -8,29 +8,34 @@ import event3 from "./../images/event3.jpg";
 import event4 from "./../images/event4.jpg";
 import EventList from "./events/EventList";
 import { NavLink } from "react-router-dom";
-import CreateEvent from "./form/CreateEvent";
+import { connect } from "react-redux";
+import { signOut } from "./../actions";
 
 class HomePage extends Component {
   render() {
+    const { uid } = this.props;
     return (
       <div className="App">
         <Layout className="layout-style">
           <header>
             <h1>LAKHANI EVENTS</h1>
             <div className="buttons">
-              <NavLink to="/login">
+              {uid ? ( <> <NavLink to="/createEvent">
+                <Button type="primary" className="header-button">
+                  Create Event
+                </Button>
+              </NavLink>
+
+              <Button type="primary" onClick={this.props.signOut}>
+                Sign Out
+              </Button></>) : (<> <NavLink to="/login">
                 <Button type="primary" className="header-button">
                   Sign In
                 </Button>
               </NavLink>
               <NavLink to="/register">
                 <button className="header-button sign-up">Register</button>
-              </NavLink>
-              <NavLink to="/createEvent">
-                <Button type="primary" className="header-button">
-                  Create Event
-                </Button>
-              </NavLink>
+              </NavLink></>)}
             </div>
           </header>
 
@@ -61,4 +66,18 @@ class HomePage extends Component {
   }
 }
 
-export default HomePage;
+const mapDispatchToProps = dispatch => {
+  return {
+    signOut: () => {
+      dispatch(signOut());
+    }
+  };
+};
+
+const mapStateToProps = state => {
+  return {
+    uid: state.firebase.auth.uid
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
