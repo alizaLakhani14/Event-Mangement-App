@@ -2,7 +2,7 @@ import firebase from "firebase/app";
 
 export const createEvent = event => {
   return (dispatch, getFirebase, getState) => {
-    console.log(getState().firebase.auth.uid, "state");
+    // console.log(getState().firebase.auth.uid, "state");
     const firestore = firebase.firestore();
     firestore
       .collection("Events")
@@ -71,6 +71,7 @@ export const register = newUser => {
         dispatch({ type: "SIGNUP_SUCCESS" });
       })
       .catch(err => {
+        console.log(err)
         dispatch({ type: "SIGNUP_ERROR", err });
       });
   };
@@ -86,11 +87,12 @@ export const signInWithGoogle = provider => {
         provider: provider,
         type: "popup"
       })
-      .then(() => {
+      .then((res) => {
+        console.log("res", res)
         dispatch({ type: "SIGNED_IN_WITH_GOOGLE" });
       })
       .catch(err => {
-        console.log(err, "google error");
+        console.log({err}, "google error");
       });
   };
 };

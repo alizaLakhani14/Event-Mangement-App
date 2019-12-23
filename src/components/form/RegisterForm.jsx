@@ -40,8 +40,8 @@ const RegisterForm = props => {
       }}
       validationSchema={validationSchema}
       onSubmit={values => {
-        // props.loggedIn === true && history.push("/");
         props.register(values);
+        // props.authError === null && props.history.push("/");
       }}
     >
       {({
@@ -144,7 +144,7 @@ const RegisterForm = props => {
 
 const mapStateToProps = state => {
   return {
-    loggegIn: state.auth.loggedIn
+    authError: state.auth.authError
   };
 };
 

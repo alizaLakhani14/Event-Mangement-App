@@ -1,4 +1,3 @@
-import { useHistory } from "react-router-dom";
 import React from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -40,7 +39,7 @@ const LoginForm = props => {
           isSubmitting
         }) => (
           <div className="login-form-container">
-            <form className="form" onSubmit={handleSubmit}>
+            <form className="form">
               <div className="form-field">
                 <label htmlFor="email">Email Address</label>
                 <Input
@@ -68,7 +67,7 @@ const LoginForm = props => {
                 ) : null}
               </div>
               <div className="form-field">
-                <Button type="primary" onClick={handleSubmit}>
+                <Button type="primary submit" onClick={handleSubmit}>
                   Login
                 </Button>
               </div>
@@ -90,9 +89,9 @@ const LoginForm = props => {
           </div>
         )}
       </Formik>
-      {/* {props.authError && (
+      {props.authError === "Login Failed" && (
         <Alert type="error" message="Invalid Email or Password"></Alert>
-      )} */}
+      )}
     </div>
   );
 };
