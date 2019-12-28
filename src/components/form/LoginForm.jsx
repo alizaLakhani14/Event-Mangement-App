@@ -76,16 +76,18 @@ const LoginForm = props => {
                 <span className="partition-span">OR</span>
                 <hr></hr>
               </div>
-              <button
-                className="login-button-google"
-                onClick={() => {
-                  props.signInWithGoogle("google");
-                }}
-              >
-                <Icon type="google" className="google-icon" />
-                Login with Google
-              </button>
             </form>
+            <button
+              className="login-button-google"
+              type="submit"
+              onClick={() => {
+                props.signInWithGoogle(props.history);
+                props.isEmpty === false && props.history.push("/");
+              }}
+            >
+              <Icon type="google" className="google-icon" />
+              Login with Google
+            </button>
           </div>
         )}
       </Formik>
@@ -98,18 +100,13 @@ const LoginForm = props => {
 
 const mapStateToProps = state => {
   return {
-    authError: state.auth.authError
+    authError: state.auth.authError,
+    isEmpty: state.firebase.auth.isEmpty
   };
 };
-const mapDispatchToProps = dispatch => {
-  return {
-    signIn: creds => {
-      dispatch(signIn(creds));
-    },
-    signInWithGoogle: provider => {
-      dispatch(signInWithGoogle(provider));
-    }
-  };
+const mapDispatchToProps = {
+  signIn,
+  signInWithGoogle
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

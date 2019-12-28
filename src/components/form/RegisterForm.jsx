@@ -41,7 +41,7 @@ const RegisterForm = props => {
       validationSchema={validationSchema}
       onSubmit={values => {
         props.register(values);
-        // props.authError === null && props.history.push("/");
+        props.authError === null && props.history.push("/");
       }}
     >
       {({

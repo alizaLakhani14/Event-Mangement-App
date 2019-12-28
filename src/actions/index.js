@@ -2,7 +2,7 @@ import firebase from "firebase/app";
 
 export const createEvent = event => {
   return (dispatch, getFirebase, getState) => {
-    // console.log(getState().firebase.auth.uid, "state");
+    console.log(getState, "events state");
     const firestore = firebase.firestore();
     firestore
       .collection("Events")
@@ -63,36 +63,66 @@ export const register = newUser => {
           .doc(res.user.uid)
           .set({
             name: newUser.name,
-            contact: newUser.contact,
-            id: newUser.uid
+            contact: newUser.contact
+            // id: newUser.uid
           });
       })
       .then(() => {
         dispatch({ type: "SIGNUP_SUCCESS" });
       })
       .catch(err => {
-        console.log(err)
+        console.log(err);
         dispatch({ type: "SIGNUP_ERROR", err });
       });
   };
 };
 
-
-export const signInWithGoogle = provider => {
+export const signInWithGoogle = parameter => {
   return (dispatch, getState, getFirebase) => {
     const firebase = getFirebase();
 
     firebase
       .login({
-        provider: provider,
+        provider: "google",
         type: "popup"
       })
-      .then((res) => {
-        console.log("res", res)
+      .then(res => {
+        console.log("res", res);
         dispatch({ type: "SIGNED_IN_WITH_GOOGLE" });
+        parameter.push("/");
       })
       .catch(err => {
-        console.log({err}, "google error");
+        console.log({ err }, "google error");
       });
+  };
+};
+
+export const uploadImage = file => {
+  console.log(file);
+  return (dispatch, getState, getFirebase) => {
+    const firebase = getFirebase();
+    const uploadTask = firebase
+      .storage()
+      .ref(`images/${file.name}`)
+      .put(file);
+
+    uploadTask.on(
+      "state_changed",
+      snapshot => {
+        const progress = Math.random(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        console.log(snapshot);
+        dispatch({ type: "PROGRESS" });
+      },
+      error => {
+        console.log(error);
+      },
+      () => {
+        uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+          dispatch({ type: "UPLOAD_COMPLETE", payload: downloadURL });
+        });
+      }
+    );
   };
 };

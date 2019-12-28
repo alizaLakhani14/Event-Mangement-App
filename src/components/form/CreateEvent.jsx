@@ -1,15 +1,27 @@
 import { useHistory } from "react-router-dom";
+import PlacesAutocomplete, {
+  geocodeByAddress,
+  getLatLng
+} from "react-places-autocomplete";
 import React from "react";
 import { Input } from "antd";
+import { Upload, Button, Icon } from "antd";
 import { Formik } from "formik";
 import "./CreateEvent.css";
 import { connect } from "react-redux";
-import { createEvent } from "./../../actions";
+import { createEvent, uploadImage } from "./../../actions";
 const { TextArea } = Input;
 
 const CreateEvent = props => {
+  console.log(props, "This is props");
+  const imageUpload = file => {
+    // console.log(file);
+    props.uploadImage(file.file.originFileObj);
+  };
+
+  const handleSelect = async value => {};
+
   let history = useHistory();
-  console.log(props);
   return (
     <Formik
       initialValues={{
@@ -20,9 +32,9 @@ const CreateEvent = props => {
         contactNumber: ""
       }}
       onSubmit={values => {
+        // console.log({ ...values, url: props.url });
         history.push("/");
-        console.log(values)
-        props.createEvent(values);
+        props.createEvent({ ...values, url: props.url });
       }}
     >
       {({ values, errors, handleChange, handleSubmit, isSubmitting }) => (
@@ -78,10 +90,47 @@ const CreateEvent = props => {
               ></Input>
             </div>
             <div className="form-field">
-              <button className="create-event-button" onClick={handleSubmit} type='submit'>
+              <button
+                className="create-event-button"
+                onClick={handleSubmit}
+                type="submit"
+              >
                 Create Event
               </button>
             </div>
+            <Upload onChange={imageUpload}>
+              <Button>
+                <Icon type="upload" /> Upload
+              </Button>
+            </Upload>
+            <PlacesAutocomplete
+              value={values.place}
+              onChange={handleChange}
+              onSelect={handleSelect}
+            >
+              {({
+                getInputProps,
+                suggestions,
+                getSuggestionItemProps,
+                loading
+              }) => (
+                <>
+                  <Input
+                    // onChange={handleChange}
+                    // value={values.place}
+                    // type="text"
+                    // name="place"
+                    {...getInputProps({
+                      placeholder: "Type your address"
+                    })}
+                  ></Input>
+                  <div>{loading ? <div>...loading</div> : null}</div>
+                  {suggestions.map(suggestion => {
+                    return <div>{suggestion.description}</div>;
+                  })}
+                </>
+              )}
+            </PlacesAutocomplete>
           </form>
         </div>
       )}
@@ -89,16 +138,16 @@ const CreateEvent = props => {
   );
 };
 
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     createEvent: event => dispatch(createEvent(event))
-//   };
-// };
-
+const mapStateToProps = state => {
+  return {
+    url: state.imageUpload.url
+  };
+};
 const mapDispatchToProps = {
-  createEvent
+  createEvent,
+  uploadImage
 };
 
-export default connect(null, mapDispatchToProps)(CreateEvent);
+export default connect(mapStateToProps, mapDispatchToProps)(CreateEvent);
 
 // export default CreateEvent;

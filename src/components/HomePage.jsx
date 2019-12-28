@@ -9,7 +9,9 @@ import event4 from "./../images/event4.jpg";
 import EventList from "./events/EventList";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
-import { signOut } from "./../actions";
+import { signOut, createEvent } from "./../actions";
+// import CreateEvent from "./../components/form/CreateEvent";
+import PlacesInput from "./form/PlacesInput";
 
 class HomePage extends Component {
   render() {
@@ -20,22 +22,31 @@ class HomePage extends Component {
           <header>
             <h1>LAKHANI EVENTS</h1>
             <div className="buttons">
-              {uid ? ( <> <NavLink to="/createEvent">
-                <Button type="primary" className="header-button">
-                  Create Event
-                </Button>
-              </NavLink>
-
-              <Button type="primary" onClick={this.props.signOut}>
-                Sign Out
-              </Button></>) : (<> <NavLink to="/login">
-                <Button type="primary" className="header-button">
-                  Sign In
-                </Button>
-              </NavLink>
-              <NavLink to="/register">
-                <button className="header-button sign-up">Register</button>
-              </NavLink></>)}
+              {uid ? (
+                <>
+                  {" "}
+                  <NavLink to="/createEvent">
+                    <Button type="primary" className="header-button">
+                      Create Event
+                    </Button>
+                  </NavLink>
+                  <Button type="primary" onClick={this.props.signOut}>
+                    Sign Out
+                  </Button>
+                </>
+              ) : (
+                <>
+                  {" "}
+                  <NavLink to="/login">
+                    <Button type="primary" className="header-button">
+                      Sign In
+                    </Button>
+                  </NavLink>
+                  <NavLink to="/register">
+                    <button className="header-button sign-up">Register</button>
+                  </NavLink>
+                </>
+              )}
             </div>
           </header>
 
@@ -59,8 +70,9 @@ class HomePage extends Component {
             <h1>Events</h1>
             <EventList />
           </section>
+          {/* <CreateEvent /> */}
+          <PlacesInput></PlacesInput>
         </Layout>
-        {/* <CreateEvent /> */}
       </div>
     );
   }
