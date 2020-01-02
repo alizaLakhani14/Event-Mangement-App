@@ -19,5 +19,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+}
+
+.create-event-heading {
+  margin: 20px;
+  display: flex;
+  justify-content: center;
 }

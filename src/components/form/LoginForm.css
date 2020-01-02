@@ -1,8 +1,5 @@
-.form {
+.login-form {
   width: 500px;
-  box-shadow: 0px 0px 9px 2px #a49e9e78;
-  margin: 10px;
-  padding: 5px;
 }
 
 hr {
@@ -21,6 +18,7 @@ hr {
   padding: 0 15px;
   height: 32px;
   border-radius: 4px;
+  width: 400px;
 }
 
 .partition-span {
@@ -30,7 +28,7 @@ hr {
 }
 
 .partition {
-  margin-left: 5px;
+  margin-left: 9px;
 }
 
 .google-icon {
@@ -38,8 +36,15 @@ hr {
 }
 
 .login-form-container {
+  box-shadow: 0px 0px 9px 2px #a49e9e78;
+  width: 500px;
+  margin: 0 auto;
+}
+
+.container {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
+  flex-direction: column;
 }

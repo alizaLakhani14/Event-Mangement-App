@@ -1,6 +1,60 @@
-.eventList{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
+.eventList {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.ant-card {
+  width: 300px;
+  margin: 1em;
+  border-radius: 10px;
+  box-shadow: 0 0 10px 2px #0000002e;
+}
+
+.ant-card-body {
+  padding: 0px;
+  border: none;
+  outline: none;
+}
+
+.event-img {
+  width: 298px;
+  height: 250px;
+  margin: 0;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-left: 1.5em;
+  margin-bottom: 10px;
+}
+
+.event-heading {
+  margin: 0;
+  color: black;
+  font-family: "Montserrat", sans-serif;
+  /* text-decoration: none; */
+  font-weight: 600px;
+  font-size: 3em;
+}
+
+.event-description {
+  font-size: large;
+  font-family: "Montserrat", sans-serif;
+}
+
+.view-more {
+  background-color: #f13a59;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  height: 32px;
+  padding: 0 15px;
+  outline: none;
+  margin-bottom: 0.5em;
 }

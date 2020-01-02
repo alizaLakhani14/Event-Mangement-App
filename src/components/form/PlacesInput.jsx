@@ -4,40 +4,42 @@ import PlacesAutocomplete, {
   getLatLng
 } from "react-places-autocomplete";
 import { Input } from "antd";
+import "./PlacesInput.css";
 
-const PlacesInput = () => {
+const PlacesInput = ({ setFieldValue }) => {
   const [address, setAddress] = React.useState("");
+  const [coordinates, setCoordinates] = React.useState({
+    lat: null,
+    lng: null
+  });
 
-  // const handleSelect = address => {
-  //   geocodeByAddress(address)
-  //     .then(results => getLatLng(results[0]))
-  //     .then(latLng => {
-  //       this.setState(() => {
-  //         this.props.form.setFieldValue(this.state.name, {
-  //           value: address,
-  //           address,
-  //           coordinates: latLng
-  //         });
-  //         return { address };
-  //       });
-  //     })
-  //     .catch(error => this.props.form.setFieldError(this.state.name, error));
+  const handleSelect = async value => {
+    const results = await geocodeByAddress(value);
+    const latLng = await getLatLng(results[0]);
+    setAddress(value);
+    setCoordinates(latLng);
+    console.log(latLng);
+    setFieldValue("places", latLng);
+  };
+
+  const handleChange = address => {
+    setAddress(address);
+  };
+  // const handleClick = value => {
+  //   setAddress(value);
   // };
-  const handleSelect = async value => {};
   return (
     <div>
       <PlacesAutocomplete
         value={address}
-        onChange={setAddress}
+        onChange={handleChange}
         onSelect={handleSelect}
       >
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
           <>
             <Input
               style={{
-                height: "50px",
-                width: "400px",
-                margin: "1em"
+                height: "32px"
               }}
               {...getInputProps({
                 placeholder: "Type your address"
@@ -46,7 +48,14 @@ const PlacesInput = () => {
             <div>{loading ? <div>...loading</div> : null}</div>
             {suggestions.map(suggestion => {
               return (
-                <div {...getSuggestionItemProps}>{suggestion.description}</div>
+                <div
+                  // onClick={() => {
+                  //   handleClick(suggestion.description);
+                  // }}
+                  {...getSuggestionItemProps}
+                >
+                  {suggestion.description}
+                </div>
               );
             })}
           </>

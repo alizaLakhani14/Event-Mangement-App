@@ -1,8 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Card } from "antd";
+import { Card, Button, Icon } from "antd";
 import "./EventList.css";
 import { useFirestoreConnect } from "react-redux-firebase";
+import { NavLink } from "react-router-dom";
+
 const EventList = props => {
   useFirestoreConnect([{ collection: "Events" }]);
   let eventList =
@@ -10,12 +12,18 @@ const EventList = props => {
     props.events.map(event => {
       return (
         <Card
-          style={{ width: 300, margin: "1em" }}
+          className="ant-card"
           key={event.id}
-          // id={props.id}
         >
-          <h1>{event.name}</h1>
-          <p>{event.description}</p>
+          <img src={event.url} alt="img" className="event-img" />
+          <div className="details">
+            <h1 className="event-heading">{event.name}</h1>
+            <NavLink to={`event/${event.id}`}>
+              <button className="view-more">
+                View More <Icon type="arrow-right" />{" "}
+              </button>
+            </NavLink>
+          </div>
         </Card>
       );
     });
@@ -24,8 +32,7 @@ const EventList = props => {
 
 const mapStateToProps = state => {
   return {
-    events: state.firestore.ordered.Events,
-
+    events: state.firestore.ordered.Events
   };
 };
 

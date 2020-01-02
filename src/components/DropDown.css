@@ -1,0 +1,9 @@
+.drop-down {
+  display: none;
+}
+
+@media screen and (max-width: 400px) {
+  .drop-down {
+    display: block;
+  }
+}

@@ -10,8 +10,7 @@ import EventList from "./events/EventList";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import { signOut, createEvent } from "./../actions";
-// import CreateEvent from "./../components/form/CreateEvent";
-import PlacesInput from "./form/PlacesInput";
+import DropDown from "./DropDown";
 
 class HomePage extends Component {
   render() {
@@ -33,6 +32,11 @@ class HomePage extends Component {
                   <Button type="primary" onClick={this.props.signOut}>
                     Sign Out
                   </Button>
+                  <NavLink to="/MyEvents">
+                    <Button type="primary" style={{ margin: "5px" }}>
+                      My Events
+                    </Button>
+                  </NavLink>
                 </>
               ) : (
                 <>
@@ -48,6 +52,7 @@ class HomePage extends Component {
                 </>
               )}
             </div>
+            <DropDown />
           </header>
 
           <section className="carousel">
@@ -71,7 +76,7 @@ class HomePage extends Component {
             <EventList />
           </section>
           {/* <CreateEvent /> */}
-          <PlacesInput></PlacesInput>
+          {/* <PlacesInput></PlacesInput> */}
         </Layout>
       </div>
     );
