@@ -9,13 +9,17 @@ import { createEvent, uploadImage } from "./../../actions";
 import PlacesInput from "./PlacesInput";
 
 const CreateEvent = props => {
-  console.log(props, "This is props");
+  let history = useHistory();
+
+  let uploader;
   const imageUpload = file => {
-    props.uploadImage(file.file.originFileObj);
+    console.log(file.fileList);
+    uploader = file.fileList;
+    // console.log(uploader, "Uploaded File");
+    // console.log(file.file, "Final");
+    // props.uploadImage(file.file.originFileObj);
   };
 
-  const handleSelect = async value => {};
-  let history = useHistory();
   return (
     <Formik
       initialValues={{
@@ -25,14 +29,18 @@ const CreateEvent = props => {
         price: "",
         contactNumber: "",
         places: {}
+        // uploader: []
       }}
       onSubmit={values => {
-        history.push("/");
+        const imageUrls = props.uploadImage(uploader, values.name);
+        console.log("in CreateEvent", imageUrls)
         props.createEvent({
           ...values,
-          url: props.url,
-          createrId: props.createrId
+          createrId: props.createrId,
+          images: imageUrls
         });
+
+        history.push("/");
       }}
     >
       {({
@@ -102,7 +110,7 @@ const CreateEvent = props => {
                 <PlacesInput setFieldValue={setFieldValue} />
               </div>
               <div className="form-field">
-                <Upload onChange={imageUpload}>
+                <Upload onChange={imageUpload} multiple>
                   <Button>
                     <Icon type="upload" /> Upload
                   </Button>
@@ -117,6 +125,7 @@ const CreateEvent = props => {
                   Create Event
                 </button>
               </div>
+              {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
             </form>
           </div>
         </>
@@ -128,7 +137,8 @@ const CreateEvent = props => {
 const mapStateToProps = state => {
   return {
     url: state.imageUpload.url,
-    createrId: state.firebase.auth.uid
+    createrId: state.firebase.auth.uid,
+    imageUpload: state.imageUpload
   };
 };
 const mapDispatchToProps = {

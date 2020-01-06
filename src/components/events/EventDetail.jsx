@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { useFirestoreConnect } from "react-redux-firebase";
-import { Icon } from "antd";
+import { Icon, Carousel } from "antd";
 import EventDetailMap from "./EventDetailMap";
 import "./EventDetail.css";
 
@@ -16,7 +16,14 @@ const EventDetail = props => {
   return (
     <div className="detailPage">
       <div className="img-name">
-        <img src={props.event.url} alt="img" className="event-detail-img" />
+        <Carousel autoplay>
+          {props.event.images.map(image => (
+            <div>
+              <img src={image} alt="img" className="event-detail-img" />{" "}
+            </div>
+          ))}
+        </Carousel>
+
         <div className="event-details-div">
           <h1 className="event-name-heading ">{props.event.name}</h1>
           <div className="contact-info">

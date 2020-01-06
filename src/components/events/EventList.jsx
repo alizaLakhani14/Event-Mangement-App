@@ -6,16 +6,14 @@ import { useFirestoreConnect } from "react-redux-firebase";
 import { NavLink } from "react-router-dom";
 
 const EventList = props => {
+  console.log(props);
   useFirestoreConnect([{ collection: "Events" }]);
   let eventList =
     props.events &&
     props.events.map(event => {
       return (
-        <Card
-          className="ant-card"
-          key={event.id}
-        >
-          <img src={event.url} alt="img" className="event-img" />
+        <Card className="ant-card" key={event.id}>
+          <img src={event.images[0]} alt="img" className="event-img" />
           <div className="details">
             <h1 className="event-heading">{event.name}</h1>
             <NavLink to={`event/${event.id}`}>

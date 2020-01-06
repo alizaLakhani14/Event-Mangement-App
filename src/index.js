@@ -7,7 +7,6 @@ import { Provider } from "react-redux";
 import * as serviceWorker from "./serviceWorker";
 import { createFirestoreInstance } from "redux-firestore";
 import rootReducer from "./reducers";
-import { getFirestore } from "redux-firestore";
 import thunk from "redux-thunk";
 import firebase from "./config/firebase";
 import { ReactReduxFirebaseProvider, getFirebase } from "react-redux-firebase";

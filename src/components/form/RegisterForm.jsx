@@ -29,116 +29,144 @@ const validationSchema = Yup.object().shape({
 
 const RegisterForm = props => {
   // let history = useHistory();
+  console.log(props, "history ");
   return (
-    <Formik
-      initialValues={{
-        name: "",
-        contact: "",
-        email: "",
-        password: "",
-        confirmPassword: ""
-      }}
-      validationSchema={validationSchema}
-      onSubmit={values => {
-        props.register(values);
-        props.authError === null && props.history.push("/");
-      }}
-    >
-      {({
-        values,
-        errors,
-        touched,
-        handleChange,
-        handleBlur,
-        handleSubmit,
-        isSubmitting
-      }) => (
-        <div className="register-form-container">
-          <form className="form">
-            <div className="form-field">
-              <label htmlFor="name">Name</label>
-              <Input
-                type="text"
-                placeholder="Enter your name"
-                id="name"
-                name="name"
-                onChange={handleChange}
-                value={values.name}
-                onBlur={handleBlur}
-              />
-              {errors.name && touched.name ? (
-                <div className="Error-message">{errors.name}</div>
-              ) : null}
-            </div>
-            <div className="form-field">
-              <label htmlFor="contact">Contact</label>
-              <Input
-                type="number"
-                placeholder="Enter contact Number"
-                id="contact"
-                name="contact"
-                onChange={handleChange}
-                value={values.contact}
-                onBlur={handleBlur}
-              />
-              {errors.contact && touched.contact ? (
-                <div className="Error-message">{errors.contact}</div>
-              ) : null}
-            </div>
-            <div className="form-field">
-              <label htmlFor="email">Email</label>
-              <Input
-                type="email"
-                placeholder="Enter Email Address"
-                id="email"
-                name="email"
-                onChange={handleChange}
-                value={values.email}
-                onBlur={handleBlur}
-              />
-              {errors.email && touched.email ? (
-                <div className="Error-message">{errors.email}</div>
-              ) : null}
-            </div>
-            <div className="form-field">
-              <label htmlFor="password">Password</label>
-              <Input.Password
-                type="password"
-                placeholder="Enter your password"
-                id="password"
-                name="password"
-                onChange={handleChange}
-                value={values.password}
-                onBlur={handleBlur}
-              />
-              {errors.password && touched.password ? (
-                <div className="Error-message">{errors.password}</div>
-              ) : null}
-            </div>
-            <div className="form-field">
-              <label htmlFor="password">Confirm Password</label>
-              <Input.Password
-                type="password"
-                placeholder="Enter the confirmed password"
-                id="confirmPassword"
-                name="confirmPassword"
-                onChange={handleChange}
-                value={values.confirmPassword}
-                onBlur={handleBlur}
-              />
-              {errors.confirmPassword ? (
-                <div className="Error-message">{errors.confirmPassword}</div>
-              ) : null}
-            </div>
-            <div className="form-field Button">
-              <Button type="primary" onClick={handleSubmit}>
-                Submit
-              </Button>
-            </div>
-          </form>
-        </div>
-      )}
-    </Formik>
+    <>
+      <Formik
+        initialValues={{
+          name: "",
+          contact: "",
+          email: "",
+          password: "",
+          confirmPassword: ""
+        }}
+        validationSchema={validationSchema}
+        onSubmit={values => {
+          props.register(values);
+          props.authError === null && props.history.push("/");
+        }}
+      >
+        {({
+          values,
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          isSubmitting
+        }) => (
+          <div className="register-form-container">
+            <form className="form">
+              <div className="form-field">
+                <label htmlFor="name">Name</label>
+                <Input
+                  type="text"
+                  placeholder="Enter your name"
+                  id="name"
+                  name="name"
+                  onChange={handleChange}
+                  value={values.name}
+                  onBlur={handleBlur}
+                />
+                {errors.name && touched.name ? (
+                  <div className="Error-message">{errors.name}</div>
+                ) : null}
+              </div>
+              <div className="form-field">
+                <label htmlFor="contact">Contact</label>
+                <Input
+                  type="number"
+                  placeholder="Enter contact Number"
+                  id="contact"
+                  name="contact"
+                  onChange={handleChange}
+                  value={values.contact}
+                  onBlur={handleBlur}
+                />
+                {errors.contact && touched.contact ? (
+                  <div className="Error-message">{errors.contact}</div>
+                ) : null}
+              </div>
+              <div className="form-field">
+                <label htmlFor="email">Email</label>
+                <Input
+                  type="email"
+                  placeholder="Enter Email Address"
+                  id="email"
+                  name="email"
+                  onChange={handleChange}
+                  value={values.email}
+                  onBlur={handleBlur}
+                />
+                {errors.email && touched.email ? (
+                  <div className="Error-message">{errors.email}</div>
+                ) : null}
+              </div>
+              <div className="form-field">
+                <label htmlFor="password">Password</label>
+                <Input.Password
+                  type="password"
+                  placeholder="Enter your password"
+                  id="password"
+                  name="password"
+                  onChange={handleChange}
+                  value={values.password}
+                  onBlur={handleBlur}
+                />
+                {errors.password && touched.password ? (
+                  <div className="Error-message">{errors.password}</div>
+                ) : null}
+              </div>
+              <div className="form-field">
+                <label htmlFor="password">Confirm Password</label>
+                <Input.Password
+                  type="password"
+                  placeholder="Enter the confirmed password"
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  onChange={handleChange}
+                  value={values.confirmPassword}
+                  onBlur={handleBlur}
+                />
+                {errors.confirmPassword ? (
+                  <div className="Error-message">{errors.confirmPassword}</div>
+                ) : null}
+              </div>
+              <div className="form-field Button">
+                <Button type="primary" onClick={handleSubmit}>
+                  Submit
+                </Button>
+              </div>
+              <p>
+                Already have an account.{" "}
+                <span
+                  style={{
+                    color: "blue",
+                    textDecoration: "underline",
+                    margin: "1px",
+                    cursor: "pointer"
+                  }}
+                  onClick={() => {
+                    props.history.push("/login");
+                  }}
+                >
+                  Sign In
+                </span>
+              </p>
+            </form>
+          </div>
+        )}
+      </Formik>
+      Already have an account!
+      <button
+        onClick={() => {
+          console.log("clicked");
+          props.history.push("/login");
+        }}
+      >
+        Sign In
+      </button>
+    </>
   );
 };
 

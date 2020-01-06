@@ -16,6 +16,7 @@ const validationSchema = Yup.object().shape({
 
 const LoginForm = props => {
   console.log(props);
+  console.log("component appeared");
   return (
     <div>
       <Formik
@@ -91,6 +92,22 @@ const LoginForm = props => {
                   Login with Google
                 </button>
               </div>
+              <p>
+                Don't have an account.
+                <span
+                  style={{
+                    color: "blue",
+                    textDecoration: "underline",
+                    margin: "1px",
+                    cursor: "pointer"
+                  }}
+                  onClick={() => {
+                    props.history.push("/register");
+                  }}
+                >
+                  Register
+                </span>
+              </p>
             </div>
           </div>
         )}

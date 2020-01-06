@@ -2,7 +2,7 @@ import firebase from "firebase/app";
 
 export const createEvent = event => {
   return (dispatch, getFirebase, getState) => {
-    console.log(getState, "events state");
+    console.log(getState(), "events state");
     const firestore = firebase.firestore();
     firestore
       .collection("Events")
@@ -14,6 +14,22 @@ export const createEvent = event => {
       })
       .catch(err => {
         dispatch({ type: "ERROR", err });
+      });
+  };
+};
+
+export const deleteEvent = e => {
+  return (dispatch, getFirebase, getState) => {
+    const firestore = firebase.firestore();
+    firestore
+      .collection("Events")
+      .doc(e.id)
+      .delete()
+      .then(res => {
+        dispatch({ type: "DELETED" });
+      })
+      .catch(err => {
+        dispatch({ type: "NOT_DELETED" });
       });
   };
 };
@@ -97,32 +113,72 @@ export const signInWithGoogle = parameter => {
   };
 };
 
-export const uploadImage = file => {
-  console.log(file);
+export const uploadImage = (files, name) => {
+  console.log("incoming files", files);
   return (dispatch, getState, getFirebase) => {
     const firebase = getFirebase();
-    const uploadTask = firebase
-      .storage()
-      .ref(`images/${file.name}`)
-      .put(file);
+    let uploadTask;
+    const imageUrls = [];
+    let urls = [];
+    files.forEach(file => {
+      console.log(file, "individual file");
+      uploadTask = firebase
+        .storage()
+        .ref(`images/${name}/${file.name}`)
+        .put(file.originFileObj);
 
-    uploadTask.on(
-      "state_changed",
-      snapshot => {
-        const progress = Math.random(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-        console.log(snapshot);
-        dispatch({ type: "PROGRESS" });
-      },
-      error => {
-        console.log(error);
-      },
-      () => {
-        uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-          dispatch({ type: "UPLOAD_COMPLETE", payload: downloadURL });
-        });
-      }
-    );
+      uploadTask.on(
+        "state_changed",
+        snapshot => {
+          console.log('Checking')
+          const progress = Math.random(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+          dispatch({ type: "PROGRESS" });
+        },
+        error => {
+          console.log(error);
+        },
+        () => {
+          uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+            imageUrls.push(downloadURL)
+            urls.push([...imageUrls])
+            dispatch({ type: "UPLOAD_COMPLETE", payload: downloadURL });
+          });
+        }
+      );
+    });
+    console.log("In action", imageUrls)
+    return urls;
   };
 };
+
+// export const uploadImage = file => {
+//   console.log(file, "actions");
+//   return (dispatch, getState, getFirebase) => {
+//     const firebase = getFirebase();
+//     const uploadTask = firebase
+//       .storage()
+//       .ref(`images/${file.name}`)
+//       .put(file);
+
+//     uploadTask.on(
+//       "state_changed",
+//       snapshot => {
+//         const progress = Math.random(
+//           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+//         );
+//         console.log(snapshot);
+//         dispatch({ type: "PROGRESS" });
+//       },
+//       error => {
+//         console.log(error);
+//       },
+//       () => {
+//         uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+//           dispatch({ type: "UPLOAD_COMPLETE", payload: downloadURL });
+//         });
+//       }
+//     );
+//   };
+// };
