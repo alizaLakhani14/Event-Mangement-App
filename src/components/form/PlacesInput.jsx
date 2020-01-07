@@ -14,6 +14,7 @@ const PlacesInput = ({ setFieldValue }) => {
   });
 
   const handleSelect = async value => {
+    console.log(value);
     const results = await geocodeByAddress(value);
     const latLng = await getLatLng(results[0]);
     setAddress(value);

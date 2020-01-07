@@ -11,6 +11,8 @@ import PlacesInput from "./PlacesInput";
 const CreateEvent = props => {
   let history = useHistory();
 
+  console.log(props, "props");
+
   let uploader;
   const imageUpload = file => {
     console.log(file.fileList);
@@ -28,19 +30,17 @@ const CreateEvent = props => {
         description: "",
         price: "",
         contactNumber: "",
-        places: {}
+        places: ""
         // uploader: []
       }}
-      onSubmit={values => {
-        const imageUrls = props.uploadImage(uploader, values.name);
-        console.log("in CreateEvent", imageUrls)
+      onSubmit={async values => {
+        const urls = await props.uploadImage(uploader, values.name);
+
         props.createEvent({
           ...values,
-          createrId: props.createrId,
-          images: imageUrls
+          images: urls
         });
-
-        history.push("/");
+        props.history.push("/");
       }}
     >
       {({
@@ -63,6 +63,7 @@ const CreateEvent = props => {
                   id="name"
                   name="name"
                   onChange={handleChange}
+                  value={values.name}
                 ></Input>
               </div>
               <div className="form-field">
@@ -72,6 +73,7 @@ const CreateEvent = props => {
                   id="maxMembers"
                   name="maxMembers"
                   onChange={handleChange}
+                  value={values.maxMembers}
                 ></Input>
               </div>
               <div className="form-field">
@@ -84,6 +86,7 @@ const CreateEvent = props => {
                   autoSize={true}
                   maxLength={1000}
                   onChange={handleChange}
+                  value={values.description}
                 ></Input.TextArea>
               </div>
               <div className="form-field">
@@ -93,6 +96,7 @@ const CreateEvent = props => {
                   id="price"
                   name="price"
                   onChange={handleChange}
+                  value={values.price}
                 ></Input>
               </div>
               <div className="form-field">
@@ -102,6 +106,7 @@ const CreateEvent = props => {
                   id="contactNumber"
                   name="contactNumber"
                   onChange={handleChange}
+                  value={values.contactNumber}
                 ></Input>
               </div>
 
@@ -125,7 +130,7 @@ const CreateEvent = props => {
                   Create Event
                 </button>
               </div>
-              {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
+              <pre>{JSON.stringify(values, null, 2)}</pre>
             </form>
           </div>
         </>
@@ -138,7 +143,8 @@ const mapStateToProps = state => {
   return {
     url: state.imageUpload.url,
     createrId: state.firebase.auth.uid,
-    imageUpload: state.imageUpload
+    imageUpload: state.imageUpload,
+    fetchedValues: state.updateEvent
   };
 };
 const mapDispatchToProps = {

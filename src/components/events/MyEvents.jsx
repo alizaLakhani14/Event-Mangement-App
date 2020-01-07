@@ -1,19 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
-import { Card, Icon, Button } from "antd";
+import { Card, Icon, Button, Modal } from "antd";
 import { useFirestoreConnect } from "react-redux-firebase";
 import "./MyEvents.css";
-import { deleteEvent } from "./../../actions/";
+import { deleteEvent, fetchValues } from "./../../actions/";
 
 const MyEvents = props => {
+  const [visible, setVisibility] = React.useState(false);
+
   useFirestoreConnect([{ collection: "Events" }]);
+
   let myEvents =
     props.events &&
     props.events.filter(event => event.createrId === props.user);
 
-  // const handleDelete = () => {
-  //   console.log("deleted");
-  // };
   return (
     <div className="my-events">
       <div className="heading">
@@ -38,6 +38,12 @@ const MyEvents = props => {
                 <Button type="primary" onClick={() => props.deleteEvent(event)}>
                   Delete Event
                 </Button>
+                <Button type="primary" onClick={() => {}}>
+                  Edit
+                </Button>
+                <Modal>
+                  <h1>Hello</h1>
+                </Modal>
               </div>
             </Card>
           ))}
@@ -54,7 +60,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  deleteEvent
+  deleteEvent,
+  fetchValues
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyEvents);

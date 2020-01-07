@@ -11,8 +11,7 @@ const imageUpload = (state = urls, action) => {
     case "UPLOAD_COMPLETE":
       return [...state, action.payload];
     case "PROGRESS":
-      console.log("progressing");
-      return state;
+      return state; 
     default:
       return state;
   }

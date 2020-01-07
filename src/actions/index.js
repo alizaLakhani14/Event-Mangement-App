@@ -34,6 +34,26 @@ export const deleteEvent = e => {
   };
 };
 
+export const updateValues = (event) => {
+  return (dispatch, getFirebase, getState) => {
+    const firestore = firebase.firestore();
+    firestore
+      .collection("Events")
+      .doc(event.id)
+      .update({
+
+      })
+      
+  };
+};
+
+export const fetchValues = event => {
+  return {
+    type: "FETCHED_VALUES",
+    payload: event[0]
+  };
+};
+
 export const signIn = credentials => {
   return (dispatch, getState, getFirebase) => {
     const firebase = getFirebase();
@@ -115,70 +135,60 @@ export const signInWithGoogle = parameter => {
 
 export const uploadImage = (files, name) => {
   console.log("incoming files", files);
-  return (dispatch, getState, getFirebase) => {
-    const firebase = getFirebase();
-    let uploadTask;
-    const imageUrls = [];
-    let urls = [];
-    files.forEach(file => {
-      console.log(file, "individual file");
-      uploadTask = firebase
-        .storage()
-        .ref(`images/${name}/${file.name}`)
-        .put(file.originFileObj);
-
-      uploadTask.on(
-        "state_changed",
-        snapshot => {
-          console.log('Checking')
-          const progress = Math.random(
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-          );
-          dispatch({ type: "PROGRESS" });
-        },
-        error => {
-          console.log(error);
-        },
-        () => {
-          uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-            imageUrls.push(downloadURL)
-            urls.push([...imageUrls])
-            dispatch({ type: "UPLOAD_COMPLETE", payload: downloadURL });
-          });
-        }
-      );
-    });
-    console.log("In action", imageUrls)
-    return urls;
+   return async (dispatch, getState, getFirebase) => {
+     
+     try {
+      let firebase = getFirebase()
+       const imageUrl = await uploadImages(files, name, firebase, dispatch)
+       dispatch({type: "UPLOAD_COMPLETE", payload: imageUrl})
+      return Promise.resolve(imageUrl)
+     } catch (error) {
+      return Promise.resolve(false)
+     }
+    
   };
 };
 
-// export const uploadImage = file => {
-//   console.log(file, "actions");
-//   return (dispatch, getState, getFirebase) => {
-//     const firebase = getFirebase();
-//     const uploadTask = firebase
-//       .storage()
-//       .ref(`images/${file.name}`)
-//       .put(file);
+const uploadImages = (files, name, firebase, dispatch) => {
+  return  new Promise((resolve, reject) => {
+    let imageUrls = [];
+    try {
+      let uploadTask;
+      for (let i = 0; i < files.length; i++) {
+       const file = files[i];
+        
+        uploadTask = firebase
+          .storage()
+          .ref(`images/${name}/${file.name}`)
+          .put(file.originFileObj);
+  
+        uploadTask.on(
+          "state_changed",
+          snapshot => {
+            console.log("Checking");
+            const progress = Math.random(
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            );
+            dispatch({ type: "PROGRESS", payload: "progressing" });
+          },
+          error => {
+            console.log(error);
+            reject(error)
+          },
+          async () => {
+          let imageUrl = await uploadTask.snapshot.ref.getDownloadURL()
+          imageUrls.push(imageUrl)
+          if(imageUrls.length === files.length) {
+            resolve(imageUrls)
+          } 
+          }
+        );
+      }
+    } catch (error) {
+      reject(error)
+    }
+  })
+ 
 
-//     uploadTask.on(
-//       "state_changed",
-//       snapshot => {
-//         const progress = Math.random(
-//           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-//         );
-//         console.log(snapshot);
-//         dispatch({ type: "PROGRESS" });
-//       },
-//       error => {
-//         console.log(error);
-//       },
-//       () => {
-//         uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-//           dispatch({ type: "UPLOAD_COMPLETE", payload: downloadURL });
-//         });
-//       }
-//     );
-//   };
-// };
+  
+};
