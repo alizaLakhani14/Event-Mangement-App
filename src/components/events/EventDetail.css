@@ -3,11 +3,16 @@
   margin-bottom: 2em;
 }
 
-.event-detail-img {
+/* .event-detail-img {
   height: 400px;
   width: 50%;
   border-radius: 10px;
   margin: 1em;
+} */
+
+.event-detail-img-div{
+  height: 400px;
+  width: 50%;
 }
 
 .img-name {

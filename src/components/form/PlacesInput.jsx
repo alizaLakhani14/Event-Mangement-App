@@ -4,9 +4,10 @@ import PlacesAutocomplete, {
   getLatLng
 } from "react-places-autocomplete";
 import { Input } from "antd";
+import { connect } from "react-redux";
 import "./PlacesInput.css";
 
-const PlacesInput = ({ setFieldValue }) => {
+const PlacesInput = ({ setFieldValue, placesField }, props) => {
   const [address, setAddress] = React.useState("");
   const [coordinates, setCoordinates] = React.useState({
     lat: null,
@@ -66,4 +67,9 @@ const PlacesInput = ({ setFieldValue }) => {
   );
 };
 
-export default PlacesInput;
+const mapStateToProps = state => {
+  return {
+    fetchedValues: state.updateEvent[0]
+  };
+};
+export default connect(mapStateToProps)(PlacesInput);

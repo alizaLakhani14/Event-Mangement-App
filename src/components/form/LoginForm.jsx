@@ -1,3 +1,4 @@
+import { useHistory } from "react-router-dom";
 import React from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -15,6 +16,7 @@ const validationSchema = Yup.object().shape({
 });
 
 const LoginForm = props => {
+  let history = useHistory();
   console.log(props);
   console.log("component appeared");
   return (
@@ -26,8 +28,8 @@ const LoginForm = props => {
         }}
         validationSchema={validationSchema}
         onSubmit={values => {
-          props.signIn(values);
-          props.authError === null && props.history.push("/");
+          props.signIn(values, history);
+          // props.authError === null && props.history.push("/");
         }}
       >
         {({
@@ -92,29 +94,41 @@ const LoginForm = props => {
                   Login with Google
                 </button>
               </div>
-              <p>
-                Don't have an account.
-                <span
+              <div className="form-field">
+                <p>
+                  Don't have an account.
+                  <span
+                    style={{
+                      color: "blue",
+                      textDecoration: "underline",
+                      margin: "1px",
+                      cursor: "pointer"
+                    }}
+                    onClick={() => {
+                      props.history.push("/register");
+                    }}
+                  >
+                    Register
+                  </span>
+                </p>
+              </div>
+            </div>
+            <div className="error-div">
+              {props.error === true && (
+                <Alert
                   style={{
-                    color: "blue",
-                    textDecoration: "underline",
-                    margin: "1px",
-                    cursor: "pointer"
+                    margin: "1em",
+                    width: "300px",
+                    textAlign: "center"
                   }}
-                  onClick={() => {
-                    props.history.push("/register");
-                  }}
-                >
-                  Register
-                </span>
-              </p>
+                  type="error"
+                  message="Invalid Email or Password"
+                ></Alert>
+              )}
             </div>
           </div>
         )}
       </Formik>
-      {props.authError === "Login Failed" && (
-        <Alert type="error" message="Invalid Email or Password"></Alert>
-      )}
     </div>
   );
 };
@@ -122,7 +136,8 @@ const LoginForm = props => {
 const mapStateToProps = state => {
   return {
     authError: state.auth.authError,
-    isEmpty: state.firebase.auth.isEmpty
+    isEmpty: state.firebase.auth.isEmpty,
+    error: state.errorReducer
   };
 };
 const mapDispatchToProps = {

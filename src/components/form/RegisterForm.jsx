@@ -1,8 +1,8 @@
-// import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import React from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { Input, Button } from "antd";
+import { Input, Button, Alert } from "antd";
 import "./RegisterForm.css";
 import { register } from "./../../actions/index";
 import { connect } from "react-redux";
@@ -28,7 +28,7 @@ const validationSchema = Yup.object().shape({
 });
 
 const RegisterForm = props => {
-  // let history = useHistory();
+  let history = useHistory();
   console.log(props, "history ");
   return (
     <>
@@ -42,8 +42,7 @@ const RegisterForm = props => {
         }}
         validationSchema={validationSchema}
         onSubmit={values => {
-          props.register(values);
-          props.authError === null && props.history.push("/");
+          props.register(values, history);
         }}
       >
         {({
@@ -137,42 +136,48 @@ const RegisterForm = props => {
                   Submit
                 </Button>
               </div>
-              <p>
-                Already have an account.{" "}
-                <span
-                  style={{
-                    color: "blue",
-                    textDecoration: "underline",
-                    margin: "1px",
-                    cursor: "pointer"
-                  }}
-                  onClick={() => {
-                    props.history.push("/login");
-                  }}
-                >
-                  Sign In
-                </span>
-              </p>
+              <div className="form-field">
+                <p>
+                  Already have an account.{" "}
+                  <span
+                    style={{
+                      color: "blue",
+                      textDecoration: "underline",
+                      margin: "1px",
+                      cursor: "pointer"
+                    }}
+                    onClick={() => {
+                      props.history.push("/login");
+                    }}
+                  >
+                    Sign In
+                  </span>
+                </p>
+              </div>
             </form>
+            <div className="error-div">
+              {props.error === true && (
+                <Alert
+                  style={{
+                    margin: "1em",
+                    width: "300px",
+                    textAlign: "center"
+                  }}
+                  type="error"
+                  message="Something went wrong"
+                ></Alert>
+              )}
+            </div>
           </div>
         )}
       </Formik>
-      Already have an account!
-      <button
-        onClick={() => {
-          console.log("clicked");
-          props.history.push("/login");
-        }}
-      >
-        Sign In
-      </button>
     </>
   );
 };
 
 const mapStateToProps = state => {
   return {
-    authError: state.auth.authError
+    error: state.errorReducer
   };
 };
 

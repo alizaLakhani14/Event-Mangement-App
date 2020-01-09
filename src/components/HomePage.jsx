@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "antd/dist/antd.css";
 import "./HomePage.css";
-import { Layout, Button, Carousel } from "antd";
+import { Layout, Button, Carousel, Alert } from "antd";
 import event1 from "./../images/event1.jpg";
 import event2 from "./../images/event2.jpg";
 import event3 from "./../images/event3.jpg";
@@ -14,7 +14,7 @@ import DropDown from "./DropDown";
 
 class HomePage extends Component {
   render() {
-    const { uid } = this.props;
+    const { uid, events, history, error } = this.props;
     return (
       <div className="App">
         <Layout className="layout-style">
@@ -32,11 +32,15 @@ class HomePage extends Component {
                   <Button type="primary" onClick={this.props.signOut}>
                     Sign Out
                   </Button>
-                  <NavLink to="/MyEvents">
-                    <Button type="primary" style={{ margin: "5px" }}>
-                      My Events
-                    </Button>
-                  </NavLink>
+                  <Button
+                    type="primary"
+                    style={{ margin: "5px" }}
+                    onClick={() => {
+                      this.props.events && this.props.history.push("/MyEvents");
+                    }}
+                  >
+                    My Events
+                  </Button>
                 </>
               ) : (
                 <>
@@ -75,8 +79,19 @@ class HomePage extends Component {
             <h1>Events</h1>
             <EventList />
           </section>
-          {/* <CreateEvent /> */}
-          {/* <PlacesInput></PlacesInput> */}
+          <div className="error-div">
+            {this.props.error === true && (
+              <Alert
+                style={{
+                  margin: "1em",
+                  width: "300px",
+                  textAlign: "center"
+                }}
+                type="error"
+                message="Something went wrong."
+              ></Alert>
+            )}
+          </div>
         </Layout>
       </div>
     );
@@ -93,7 +108,9 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   return {
-    uid: state.firebase.auth.uid
+    uid: state.firebase.auth.uid,
+    events: state.firestore.ordered.Events,
+    error: state.errorReducer
   };
 };
 

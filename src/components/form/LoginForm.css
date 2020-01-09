@@ -48,3 +48,9 @@ hr {
   height: 100vh;
   flex-direction: column;
 }
+
+.error-div {
+  position: absolute;
+  top: 87%;
+  left: 78%;
+}

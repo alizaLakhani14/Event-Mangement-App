@@ -26,3 +26,9 @@
   display: flex;
   justify-content: center;
 }
+
+.error-div {
+  position: absolute;
+  top: 87%;
+  left: 78%;
+}

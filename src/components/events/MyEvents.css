@@ -35,3 +35,9 @@
   outline: none;
   margin-bottom: 0.5em;
 }
+
+.error-div {
+  position: absolute;
+  top: 52em;
+  left: 99em;
+}

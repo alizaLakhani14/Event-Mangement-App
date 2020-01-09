@@ -13,15 +13,25 @@ const EventDetail = props => {
   };
 
   useFirestoreConnect([{ collection: "Events" }]);
+
+  console.log(props.event.images);
   return (
     <div className="detailPage">
       <div className="img-name">
-        <Carousel autoplay>
-          {props.event.images.map(image => (
-            <div>
-              <img src={image} alt="img" className="event-detail-img" />{" "}
-            </div>
-          ))}
+        <Carousel
+          autoplay
+          style={{
+            height: "400px",
+            width: "50%",
+            margin: "1.5em"
+          }}
+        >
+          {props.event.images &&
+            props.event.images.map(image => (
+              <div className="event-detail-img-div">
+                <img src={image} alt="img" className="event-detail-img" />
+              </div>
+            ))}
         </Carousel>
 
         <div className="event-details-div">

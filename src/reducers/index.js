@@ -5,6 +5,8 @@ import { firestoreReducer } from "redux-firestore";
 import authReducer from "./authReducer";
 import imageUpload from "./imageUpload";
 import updateEvent from "./updateEvent";
+import loadingReducer from "./loadingReducer";
+import errorReducer from "./errorReducer";
 
 export default combineReducers({
   events: eventsReducers,
@@ -12,5 +14,7 @@ export default combineReducers({
   firebase: firebaseReducer,
   auth: authReducer,
   imageUpload,
-  updateEvent
+  updateEvent,
+  loadingReducer,
+  errorReducer
 });

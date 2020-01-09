@@ -2,6 +2,7 @@ import firebase from "firebase/app";
 
 export const createEvent = event => {
   return (dispatch, getFirebase, getState) => {
+    dispatch({ type: "LOADING", payload: true });
     console.log(getState(), "events state");
     const firestore = firebase.firestore();
     firestore
@@ -11,9 +12,14 @@ export const createEvent = event => {
       })
       .then(() => {
         dispatch({ type: "CREATE_EVENT", event });
+        dispatch({ type: "LOADING", payload: false });
       })
       .catch(err => {
-        dispatch({ type: "ERROR", err });
+        // dispatch({ type: "ERROR", err });
+        dispatch({ type: "ERROR_CATCHED", payload: true });
+        setTimeout(() => {
+          dispatch({ type: "ERROR_CATCHED", payload: false });
+        }, 10000);
       });
   };
 };
@@ -29,32 +35,70 @@ export const deleteEvent = e => {
         dispatch({ type: "DELETED" });
       })
       .catch(err => {
-        dispatch({ type: "NOT_DELETED" });
+        // dispatch({ type: "NOT_DELETED" });
+        dispatch({ type: "ERROR_CATCHED", payload: true });
+        setTimeout(() => {
+          dispatch({ type: "ERROR_CATCHED", payload: false });
+        }, 10000);
       });
   };
 };
 
-export const updateValues = (event) => {
+export const updateValues = (
+  id,
+  name,
+  description,
+  price,
+  maxMembers,
+  contactNumber,
+  places,
+  history
+) => {
   return (dispatch, getFirebase, getState) => {
+    dispatch({ type: "LOADING", payload: true });
     const firestore = firebase.firestore();
     firestore
       .collection("Events")
-      .doc(event.id)
+      .doc(id)
       .update({
-
+        name,
+        description,
+        price,
+        maxMembers,
+        contactNumber,
+        places
       })
-      
+      .then(() => {
+        // dispatch({ type: "UPDATED" });
+        dispatch({ type: "LOADING", payload: false });
+        history.push("/MyEvents");
+      })
+      .catch(err => {
+        dispatch({ type: "ERROR_CATCHED", payload: true });
+        setTimeout(() => {
+          dispatch({ type: "ERROR_CATCHED", payload: false });
+        }, 10000);
+      });
   };
 };
 
-export const fetchValues = event => {
-  return {
-    type: "FETCHED_VALUES",
-    payload: event[0]
+export const fetchValues = (id, events) => {
+  return dispatch => {
+    return new Promise((resolve, reject) => {
+      try {
+        let values = events.filter(event => event.id === id);
+        if (values.length > 0) {
+          dispatch({ type: "FETCHED_VALUES", payload: values });
+          return resolve(values);
+        }
+      } catch (error) {
+        return resolve(false);
+      }
+    });
   };
 };
 
-export const signIn = credentials => {
+export const signIn = (credentials, history) => {
   return (dispatch, getState, getFirebase) => {
     const firebase = getFirebase();
     firebase
@@ -62,9 +106,15 @@ export const signIn = credentials => {
       .signInWithEmailAndPassword(credentials.email, credentials.password)
       .then(() => {
         dispatch({ type: "LOGIN_SUCCESS" });
+        history.push("/");
       })
       .catch(err => {
-        dispatch({ type: "LOGIN_ERROR", err });
+        console.log(err);
+        // dispatch({ type: "LOGIN_ERROR", err });
+        dispatch({ type: "ERROR_CATCHED", payload: true });
+        setTimeout(() => {
+          dispatch({ type: "ERROR_CATCHED", payload: false });
+        }, 10000);
       });
   };
 };
@@ -79,12 +129,15 @@ export const signOut = () => {
         dispatch({ type: "SIGNOUT_SUCCESS" });
       })
       .catch(err => {
-        console.log(err);
+        dispatch({ type: "ERROR_CATCHED", payload: true });
+        setTimeout(() => {
+          dispatch({ type: "ERROR_CATCHED", payload: false });
+        }, 10000);
       });
   };
 };
 
-export const register = newUser => {
+export const register = (newUser, history) => {
   return (dispatch, getState, getFirebase, getFirestore) => {
     // console.log(newUser)
     const firebase = getFirebase();
@@ -105,10 +158,13 @@ export const register = newUser => {
       })
       .then(() => {
         dispatch({ type: "SIGNUP_SUCCESS" });
+        history.push("/");
       })
       .catch(err => {
-        console.log(err);
-        dispatch({ type: "SIGNUP_ERROR", err });
+        dispatch({ type: "ERROR_CATCHED", payload: true });
+        setTimeout(() => {
+          dispatch({ type: "ERROR_CATCHED", payload: false });
+        }, 10000);
       });
   };
 };
@@ -128,67 +184,65 @@ export const signInWithGoogle = parameter => {
         parameter.push("/");
       })
       .catch(err => {
-        console.log({ err }, "google error");
+        dispatch({ type: "ERROR_CATCHED", payload: true });
+        setTimeout(() => {
+          dispatch({ type: "ERROR_CATCHED", payload: false });
+        }, 10000);
       });
   };
 };
 
 export const uploadImage = (files, name) => {
   console.log("incoming files", files);
-   return async (dispatch, getState, getFirebase) => {
-     
-     try {
-      let firebase = getFirebase()
-       const imageUrl = await uploadImages(files, name, firebase, dispatch)
-       dispatch({type: "UPLOAD_COMPLETE", payload: imageUrl})
-      return Promise.resolve(imageUrl)
-     } catch (error) {
-      return Promise.resolve(false)
-     }
-    
+  return async (dispatch, getState, getFirebase) => {
+    try {
+      dispatch({ type: "LOADING", payload: true });
+      let firebase = getFirebase();
+      const imageUrl = await uploadImages(files, name, firebase, dispatch);
+      console.log(imageUrl);
+      dispatch({ type: "UPLOAD_COMPLETE", payload: imageUrl });
+      dispatch({ type: "LOADING", payload: false });
+      return Promise.resolve(imageUrl);
+    } catch (error) {
+      return Promise.resolve(false);
+    }
   };
 };
 
 const uploadImages = (files, name, firebase, dispatch) => {
-  return  new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     let imageUrls = [];
     try {
-      let uploadTask;
       for (let i = 0; i < files.length; i++) {
-       const file = files[i];
-        
-        uploadTask = firebase
+        const file = files[i];
+        const uploadTask = firebase
           .storage()
           .ref(`images/${name}/${file.name}`)
           .put(file.originFileObj);
-  
+
         uploadTask.on(
           "state_changed",
           snapshot => {
-            console.log("Checking");
-            const progress = Math.random(
-              (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-            );
+            console.log(snapshot);
             dispatch({ type: "PROGRESS", payload: "progressing" });
           },
           error => {
             console.log(error);
-            reject(error)
+            reject(error);
           },
           async () => {
-          let imageUrl = await uploadTask.snapshot.ref.getDownloadURL()
-          imageUrls.push(imageUrl)
-          if(imageUrls.length === files.length) {
-            resolve(imageUrls)
-          } 
+            let imageUrl = await uploadTask.snapshot.ref.getDownloadURL();
+            console.log(imageUrl);
+            imageUrls.push(imageUrl);
+            if (imageUrls.length === files.length) {
+              console.log({ imageUrls });
+              resolve(imageUrls);
+            }
           }
         );
       }
     } catch (error) {
-      reject(error)
+      reject(error);
     }
-  })
- 
-
-  
+  });
 };

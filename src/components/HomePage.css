@@ -67,6 +67,12 @@ img {
   align-items: center;
 }
 
+.error-div {
+  position: absolute;
+  top: 87%;
+  left: 78%;
+}
+
 @media screen and (max-width: 400px) {
   .buttons {
     display: none;

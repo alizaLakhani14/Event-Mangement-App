@@ -1,11 +1,11 @@
 import { useHistory } from "react-router-dom";
 import React from "react";
 import { Input } from "antd";
-import { Upload, Button, Icon, Alert } from "antd";
+import { Upload, Button, Icon } from "antd";
 import { Formik } from "formik";
 import "./CreateEvent.css";
 import { connect } from "react-redux";
-import { createEvent, uploadImage } from "./../../actions";
+import { updateValues, uploadImage } from "./../../actions";
 import PlacesInput from "./PlacesInput";
 
 const CreateEvent = props => {
@@ -17,32 +17,31 @@ const CreateEvent = props => {
   const imageUpload = file => {
     console.log(file.fileList);
     uploader = file.fileList;
-    // console.log(uploader, "Uploaded File");
-    // console.log(file.file, "Final");
-    // props.uploadImage(file.file.originFileObj);
   };
 
   return (
     <Formik
       initialValues={{
-        name: "",
-        maxMembers: "",
-        description: "",
-        price: "",
-        contactNumber: "",
+        name: props.obj && props.obj.name,
+        maxMembers: props.obj && props.obj.maxMembers,
+        description: props.obj && props.obj.description,
+        price: props.obj && props.obj.price,
+        contactNumber: props.obj && props.obj.contactNumber,
         places: ""
         // uploader: []
       }}
-      onSubmit={async values => {
-        const urls = await props.uploadImage(uploader, values.name);
-
-        props.createEvent({
-          ...values,
-          creator: props.creatorId,
-          images: urls
-          // createrId: props.creatorId
-        });
-        props.history.push("/");
+      onSubmit={values => {
+        props.updateValues(
+          props.obj.id,
+          values.name,
+          values.description,
+          values.price,
+          values.maxMembers,
+          values.contactNumber,
+          values.places,
+          history
+        );
+        props.isUpdated === true && props.history.push("/MyEvents");
       }}
     >
       {({
@@ -54,7 +53,7 @@ const CreateEvent = props => {
         setFieldValue
       }) => (
         <>
-          <h1 className="create-event-heading">Create Event</h1>
+          <h1 className="create-event-heading">Edit Event</h1>
           <div className="form-container">
             <form className="form" onSubmit={handleSubmit}>
               <div className="form-field">
@@ -129,30 +128,12 @@ const CreateEvent = props => {
                   onClick={handleSubmit}
                   type="submit"
                 >
-                  Create Event
-                  {props.loading === true && (
-                    <Icon
-                      type="loading"
-                      style={{ color: "white", margin: "3px" }}
-                    ></Icon>
-                  )}
+                  Save
+                  {/* {props.loading === true && <Icon type="loading"></Icon>} */}
                 </button>
               </div>
               {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
             </form>
-            <div className="error-div">
-              {props.error === true && (
-                <Alert
-                  style={{
-                    margin: "1em",
-                    width: "300px",
-                    textAlign: "center"
-                  }}
-                  type="error"
-                  message="Something went wrong"
-                ></Alert>
-              )}
-            </div>
           </div>
         </>
       )}
@@ -163,15 +144,15 @@ const CreateEvent = props => {
 const mapStateToProps = state => {
   return {
     url: state.imageUpload.url,
-    creatorId: state.firebase.auth.uid,
+    createrId: state.firebase.auth.uid,
     imageUpload: state.imageUpload,
-    fetchedValues: state.updateEvent,
-    loading: state.loadingReducer,
-    error: state.errorReducer
+    obj: state.updateEvent[0],
+    isUpdated: state.updateEvent.isUpdated,
+    loading: state.loadingReducer
   };
 };
 const mapDispatchToProps = {
-  createEvent,
+  updateValues,
   uploadImage
 };
 
