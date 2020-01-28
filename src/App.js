@@ -6,6 +6,7 @@ import CreateEvent from "./components/form/CreateEvent";
 import MyEvents from "./components/events/MyEvents";
 import EvenDetail from "./components/events/EventDetail";
 import EditForm from "./components/form/EditForm";
+import LandingPage from "./components/LandingPage";
 import { BrowserRouter } from "react-router-dom";
 import { Route, Switch } from "react-router-dom";
 
@@ -15,7 +16,8 @@ class App extends Component {
       <BrowserRouter>
         <div className="App">
           <Switch>
-            <Route exact path="/" component={HomePage}></Route>
+            <Route exact path="/" component={LandingPage}></Route>
+            <Route exact path="/homePage" component={HomePage}></Route>
             <Route path="/login" component={LoginForm}></Route>
             <Route path="/register" component={RegisterForm}></Route>
             <Route path="/createEvent" component={CreateEvent}></Route>

@@ -8,7 +8,6 @@
 }
 
 label {
-  color: #f13a59;
   font-weight: bold;
 }
 
@@ -16,10 +15,18 @@ label {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: calc(100vh - 70px);
+  background-color: #f0f2f5;
 }
 .error-div {
   position: absolute;
-  top: 87%;
-  left: 78%;
+  top: 49em;
+  left: 89em;
+  z-index: 1000;
+}
+
+.register-button {
+  background-color: #637d96 !important;
+  outline: none !important;
+  border: none !important;
 }

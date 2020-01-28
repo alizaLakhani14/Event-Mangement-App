@@ -1,4 +1,4 @@
-/* header {
+header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -58,6 +58,7 @@ header h1 {
   background-color: transparent;
   color: #f5f5f5;
   height: 65px;
+  /* border: 1px solid white; */
   font-size: large;
   font-weight: 200;
   outline: none;
@@ -90,7 +91,6 @@ header h1 {
 .ant-dropdown {
   width: 205px !important;
   min-width: 0 !important;
-  
 }
 
 .ant-dropdown-menu-item {
@@ -111,15 +111,13 @@ header h1 {
   cursor: pointer;
 }
 
-.error-div {
-  position: absolute;
-  top: 87%;
-  left: 78%;
-}
-
 
 
 @media screen and (max-width: 400px) {
+  /* .signed-in-header-button {
+      display: none;
+    } */
+
   .header-button {
     width: 78px;
     height: 35px;
@@ -146,11 +144,4 @@ header h1 {
   header h1 {
     margin-left: 5px;
   }
-} */
-
-.error-div {
-  position: absolute;
-  top: 49em;
-  left: 89em;
-  z-index: 1000;
 }

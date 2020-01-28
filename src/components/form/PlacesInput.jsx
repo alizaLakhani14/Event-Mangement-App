@@ -51,9 +51,7 @@ const PlacesInput = ({ setFieldValue, placesField }, props) => {
             {suggestions.map(suggestion => {
               return (
                 <div
-                  // onClick={() => {
-                  //   handleClick(suggestion.description);
-                  // }}
+                  
                   {...getSuggestionItemProps}
                 >
                   {suggestion.description}

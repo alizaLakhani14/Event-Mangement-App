@@ -6,6 +6,7 @@ import { Input, Button, Alert } from "antd";
 import "./RegisterForm.css";
 import { register } from "./../../actions/index";
 import { connect } from "react-redux";
+import Header from "./../Header/Header";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string()
@@ -28,8 +29,8 @@ const validationSchema = Yup.object().shape({
 });
 
 const RegisterForm = props => {
-  let history = useHistory();
-  console.log(props, "history ");
+  // let history = useHistory();
+  // console.log(history, "history ");
   return (
     <>
       <Formik
@@ -42,7 +43,8 @@ const RegisterForm = props => {
         }}
         validationSchema={validationSchema}
         onSubmit={values => {
-          props.register(values, history);
+
+          props.register(values, props.history)
         }}
       >
         {({
@@ -54,121 +56,130 @@ const RegisterForm = props => {
           handleSubmit,
           isSubmitting
         }) => (
-          <div className="register-form-container">
-            <form className="form">
-              <div className="form-field">
-                <label htmlFor="name">Name</label>
-                <Input
-                  type="text"
-                  placeholder="Enter your name"
-                  id="name"
-                  name="name"
-                  onChange={handleChange}
-                  value={values.name}
-                  onBlur={handleBlur}
-                />
-                {errors.name && touched.name ? (
-                  <div className="Error-message">{errors.name}</div>
-                ) : null}
-              </div>
-              <div className="form-field">
-                <label htmlFor="contact">Contact</label>
-                <Input
-                  type="number"
-                  placeholder="Enter contact Number"
-                  id="contact"
-                  name="contact"
-                  onChange={handleChange}
-                  value={values.contact}
-                  onBlur={handleBlur}
-                />
-                {errors.contact && touched.contact ? (
-                  <div className="Error-message">{errors.contact}</div>
-                ) : null}
-              </div>
-              <div className="form-field">
-                <label htmlFor="email">Email</label>
-                <Input
-                  type="email"
-                  placeholder="Enter Email Address"
-                  id="email"
-                  name="email"
-                  onChange={handleChange}
-                  value={values.email}
-                  onBlur={handleBlur}
-                />
-                {errors.email && touched.email ? (
-                  <div className="Error-message">{errors.email}</div>
-                ) : null}
-              </div>
-              <div className="form-field">
-                <label htmlFor="password">Password</label>
-                <Input.Password
-                  type="password"
-                  placeholder="Enter your password"
-                  id="password"
-                  name="password"
-                  onChange={handleChange}
-                  value={values.password}
-                  onBlur={handleBlur}
-                />
-                {errors.password && touched.password ? (
-                  <div className="Error-message">{errors.password}</div>
-                ) : null}
-              </div>
-              <div className="form-field">
-                <label htmlFor="password">Confirm Password</label>
-                <Input.Password
-                  type="password"
-                  placeholder="Enter the confirmed password"
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  onChange={handleChange}
-                  value={values.confirmPassword}
-                  onBlur={handleBlur}
-                />
-                {errors.confirmPassword ? (
-                  <div className="Error-message">{errors.confirmPassword}</div>
-                ) : null}
-              </div>
-              <div className="form-field Button">
-                <Button type="primary" onClick={handleSubmit}>
-                  Submit
-                </Button>
-              </div>
-              <div className="form-field">
-                <p>
-                  Already have an account.{" "}
-                  <span
-                    style={{
-                      color: "blue",
-                      textDecoration: "underline",
-                      margin: "1px",
-                      cursor: "pointer"
-                    }}
-                    onClick={() => {
-                      props.history.push("/login");
-                    }}
+          <>
+            <Header />
+            <div className="register-form-container">
+              <form className="form">
+                <div className="form-field">
+                  <label htmlFor="name">Name</label>
+                  <Input
+                    type="text"
+                    placeholder="Enter your name"
+                    id="name"
+                    name="name"
+                    onChange={handleChange}
+                    value={values.name}
+                    onBlur={handleBlur}
+                  />
+                  {errors.name && touched.name ? (
+                    <div className="Error-message">{errors.name}</div>
+                  ) : null}
+                </div>
+                <div className="form-field">
+                  <label htmlFor="contact">Contact</label>
+                  <Input
+                    type="number"
+                    placeholder="Enter contact Number"
+                    id="contact"
+                    name="contact"
+                    onChange={handleChange}
+                    value={values.contact}
+                    onBlur={handleBlur}
+                  />
+                  {errors.contact && touched.contact ? (
+                    <div className="Error-message">{errors.contact}</div>
+                  ) : null}
+                </div>
+                <div className="form-field">
+                  <label htmlFor="email">Email</label>
+                  <Input
+                    type="email"
+                    placeholder="Enter Email Address"
+                    id="email"
+                    name="email"
+                    onChange={handleChange}
+                    value={values.email}
+                    onBlur={handleBlur}
+                  />
+                  {errors.email && touched.email ? (
+                    <div className="Error-message">{errors.email}</div>
+                  ) : null}
+                </div>
+                <div className="form-field">
+                  <label htmlFor="password">Password</label>
+                  <Input.Password
+                    type="password"
+                    placeholder="Enter your password"
+                    id="password"
+                    name="password"
+                    onChange={handleChange}
+                    value={values.password}
+                    onBlur={handleBlur}
+                  />
+                  {errors.password && touched.password ? (
+                    <div className="Error-message">{errors.password}</div>
+                  ) : null}
+                </div>
+                <div className="form-field">
+                  <label htmlFor="password">Confirm Password</label>
+                  <Input.Password
+                    type="password"
+                    placeholder="Enter the confirmed password"
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    onChange={handleChange}
+                    value={values.confirmPassword}
+                    onBlur={handleBlur}
+                  />
+                  {errors.confirmPassword ? (
+                    <div className="Error-message">
+                      {errors.confirmPassword}
+                    </div>
+                  ) : null}
+                </div>
+                <div className="form-field Button">
+                  <Button
+                    type="primary"
+                    onClick={handleSubmit}
+                    className="register-button"
                   >
-                    Sign In
-                  </span>
-                </p>
+                    Submit
+                  </Button>
+                </div>
+                <div className="form-field">
+                  <p>
+                    Already have an account.{" "}
+                    <span
+                      style={{
+                        color: "blue",
+                        textDecoration: "underline",
+                        margin: "1px",
+                        cursor: "pointer"
+                      }}
+                      onClick={() => {
+                        props.history.push("/login");
+                      }}
+                    >
+                      Sign In
+                    </span>
+                  </p>
+                </div>
+              </form>
+              <div className="error-div">
+                {props.error === true && (
+                  <Alert
+                    style={{
+                      margin: "1em",
+                      width: "300px",
+                      textAlign: "center"
+                    }}
+                    type="error"
+                    message="Something went wrong"
+                  ></Alert>
+                )}
               </div>
-            </form>
-            <div className="error-div">
-              {props.error === true && (
-                <Alert
-                  style={{
-                    margin: "1em",
-                    width: "300px",
-                    textAlign: "center"
-                  }}
-                  type="error"
-                  message="Something went wrong"
-                ></Alert>
-              )}
             </div>
-          </div>
+          </>
         )}
       </Formik>
     </>
@@ -183,8 +194,8 @@ const mapStateToProps = state => {
 
 const mapDisptachToProps = dispatch => {
   return {
-    register: newUser => {
-      dispatch(register(newUser));
+    register:(newUser, history) => {
+      dispatch(register(newUser, history));
     }
   };
 };

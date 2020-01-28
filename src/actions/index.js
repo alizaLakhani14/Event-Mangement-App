@@ -3,7 +3,6 @@ import firebase from "firebase/app";
 export const createEvent = event => {
   return (dispatch, getFirebase, getState) => {
     dispatch({ type: "LOADING", payload: true });
-    console.log(getState(), "events state");
     const firestore = firebase.firestore();
     firestore
       .collection("Events")
@@ -35,7 +34,6 @@ export const deleteEvent = e => {
         dispatch({ type: "DELETED" });
       })
       .catch(err => {
-        // dispatch({ type: "NOT_DELETED" });
         dispatch({ type: "ERROR_CATCHED", payload: true });
         setTimeout(() => {
           dispatch({ type: "ERROR_CATCHED", payload: false });
@@ -69,7 +67,6 @@ export const updateValues = (
         places
       })
       .then(() => {
-        // dispatch({ type: "UPDATED" });
         dispatch({ type: "LOADING", payload: false });
         history.push("/MyEvents");
       })
@@ -106,7 +103,7 @@ export const signIn = (credentials, history) => {
       .signInWithEmailAndPassword(credentials.email, credentials.password)
       .then(() => {
         dispatch({ type: "LOGIN_SUCCESS" });
-        history.push("/");
+        history.push("/homePage");
       })
       .catch(err => {
         console.log(err);
@@ -139,10 +136,10 @@ export const signOut = () => {
 
 export const register = (newUser, history) => {
   return (dispatch, getState, getFirebase, getFirestore) => {
-    // console.log(newUser)
+    console.log("fdsfds", history);
     const firebase = getFirebase();
     const firestore = firebase.firestore();
-    firebase
+    return firebase
       .auth()
       .createUserWithEmailAndPassword(newUser.email, newUser.password)
       .then(res => {
@@ -158,7 +155,8 @@ export const register = (newUser, history) => {
       })
       .then(() => {
         dispatch({ type: "SIGNUP_SUCCESS" });
-        history.push("/");
+        history.push("/homePage");
+        
       })
       .catch(err => {
         dispatch({ type: "ERROR_CATCHED", payload: true });
@@ -181,7 +179,7 @@ export const signInWithGoogle = parameter => {
       .then(res => {
         console.log("res", res);
         dispatch({ type: "SIGNED_IN_WITH_GOOGLE" });
-        parameter.push("/");
+        parameter.push("/homePage");
       })
       .catch(err => {
         dispatch({ type: "ERROR_CATCHED", payload: true });

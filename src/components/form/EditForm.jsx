@@ -28,7 +28,7 @@ const CreateEvent = props => {
         price: props.obj && props.obj.price,
         contactNumber: props.obj && props.obj.contactNumber,
         places: ""
-        // uploader: []
+       
       }}
       onSubmit={values => {
         props.updateValues(
@@ -129,10 +129,10 @@ const CreateEvent = props => {
                   type="submit"
                 >
                   Save
-                  {/* {props.loading === true && <Icon type="loading"></Icon>} */}
+                
                 </button>
               </div>
-              {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
+              
             </form>
           </div>
         </>

@@ -7,9 +7,10 @@ import "./CreateEvent.css";
 import { connect } from "react-redux";
 import { createEvent, uploadImage } from "./../../actions";
 import PlacesInput from "./PlacesInput";
+import Header from "./../Header/Header";
 
 const CreateEvent = props => {
-  let history = useHistory();
+  // let history = useHistory();
 
   console.log(props, "props");
 
@@ -17,9 +18,6 @@ const CreateEvent = props => {
   const imageUpload = file => {
     console.log(file.fileList);
     uploader = file.fileList;
-    // console.log(uploader, "Uploaded File");
-    // console.log(file.file, "Final");
-    // props.uploadImage(file.file.originFileObj);
   };
 
   return (
@@ -31,7 +29,7 @@ const CreateEvent = props => {
         price: "",
         contactNumber: "",
         places: ""
-        // uploader: []
+    
       }}
       onSubmit={async values => {
         const urls = await props.uploadImage(uploader, values.name);
@@ -40,9 +38,8 @@ const CreateEvent = props => {
           ...values,
           creator: props.creatorId,
           images: urls
-          // createrId: props.creatorId
         });
-        props.history.push("/");
+        props.history.push("/homePage");
       }}
     >
       {({
@@ -54,7 +51,8 @@ const CreateEvent = props => {
         setFieldValue
       }) => (
         <>
-          <h1 className="create-event-heading">Create Event</h1>
+          <Header />
+     
           <div className="form-container">
             <form className="form" onSubmit={handleSubmit}>
               <div className="form-field">
@@ -85,8 +83,8 @@ const CreateEvent = props => {
                   type="text"
                   id="description"
                   name="description"
-                  autoSize={true}
-                  maxLength={1000}
+                  // autoSize={true}
+                  autoSize={{ minRows: 1, maxRows: 7 }}
                   onChange={handleChange}
                   value={values.description}
                 ></Input.TextArea>

@@ -1,42 +1,49 @@
 .eventList {
   display: flex;
-  justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
+  flex-direction: column;
 }
 
 .ant-card {
-  width: 300px;
   margin: 1em;
-  border-radius: 10px;
-  box-shadow: 0 0 10px 2px #0000002e;
+  width: 50em;
+  height: 20em;
+  border-radius: 5px;
+  box-shadow: 0 4px 10px 0 rgba(22, 21, 55, 0.03),
+    0 0 10px 0 rgba(22, 21, 55, 0.02);
 }
 
 .ant-card-body {
   padding: 0px;
   border: none;
   outline: none;
+  display: flex;
 }
 
 .event-img {
-  width: 298px;
-  height: 250px;
   margin: 0;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  height: 20em !important;
+  width: 20em;
+  border-radius: 5px;
 }
 
 .details {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin-left: 1.5em;
-  margin-bottom: 10px;
+  margin-left: 1em;
+  padding: 15px;
+}
+.details p {
+  max-height: 9em;
+  overflow: hidden;
+  text-align: justify;
+  max-width: 350px;
 }
 
 .event-heading {
   margin: 0;
-  color: black;
+  color: #4f4556;
   font-family: "Montserrat", sans-serif;
   /* text-decoration: none; */
   font-weight: 600px;
@@ -49,7 +56,7 @@
 }
 
 .view-more {
-  background-color: #f13a59;
+  background-color: #637d96;
   color: white;
   border: none;
   border-radius: 4px;
@@ -57,4 +64,76 @@
   padding: 0 15px;
   outline: none;
   margin-bottom: 0.5em;
+}
+
+@media only screen and (max-width: 720px) {
+  .ant-card {
+    width: 43em;
+  }
+  .event-heading {
+    font-size: 2em;
+  }
+}
+
+@media only screen and (max-width: 615px) {
+  .ant-card {
+    width: 38em;
+  }
+}
+
+@media only screen and (max-width: 535px) {
+  .ant-card {
+    width: 35em;
+  }
+
+  .event-img {
+    width: 15em;
+  }
+}
+
+@media only screen and (max-width: 496px) {
+  .ant-card {
+    width: 32em;
+  }
+
+  .event-img {
+    width: 12em;
+  }
+}
+
+@media only screen and (max-width: 496px) {
+  .ant-card {
+    width: 29em;
+  }
+  .event-img {
+    width: 11em;
+  }
+}
+
+@media only screen and (max-width: 410px) {
+  .ant-card {
+    width: 27em;
+  }
+}
+
+@media only screen and (max-width: 380px) {
+  .ant-card {
+    width: 24em;
+  }
+}
+
+@media only screen and (max-width: 330px) {
+  .ant-card {
+    width: 21em;
+  }
+  .event-heading {
+    font-size: 1.5em;
+  }
+
+  .view-more {
+    font-size: small;
+  }
+  .view-more-icon {
+    display: none;
+  }
 }

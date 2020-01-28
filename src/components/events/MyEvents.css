@@ -1,7 +1,13 @@
 .my-events-heading {
-  color: #f13a59;
+  color: #4f4556;
+  font-size: 45px;
 }
-
+.my-events-container {
+  background-color: #f0f2f5;
+  width: 100%;
+  height: calc(100% - 70px);
+  min-height: calc(100vh - 70px);
+}
 .ant-card-body {
   padding: 0px;
   border: none;
@@ -10,34 +16,150 @@
 
 .my-events-list {
   display: flex;
+  align-items: center;
+  flex-direction: column;
   justify-content: center;
-  flex-wrap: wrap;
-}
-
-.my-events {
-  width: 100%;
-  height: 100vh;
 }
 
 .heading {
   margin: 2em;
   display: flex;
   justify-content: center;
+  margin: 0;
 }
 
-.my-events-button {
-  background-color: #f13a59;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  height: 32px;
-  padding: 0 15px;
-  outline: none;
-  margin-bottom: 0.5em;
-}
-
-.error-div {
+/* .error-div {
   position: absolute;
   top: 52em;
   left: 99em;
+} */
+
+.my-events-buttons {
+  display: flex;
+}
+
+.my-events-buttons button {
+  margin: 3px;
+  height: 34px;
+  width: 8em;
+  background-color: #637d96 !important;
+  color: #f5f5f5;
+  border: none;
+  border-radius: 3px;
+}
+
+.my-events-description {
+  max-width: 350px;
+}
+
+.delete-edit-icons {
+  display: none;
+}
+.delete,
+.edit {
+  margin-top: 13px;
+  margin-left: 1em;
+  font-size: larger;
+}
+.delete {
+  color: red;
+}
+.edit {
+  color: blue;
+}
+
+@media only screen and (max-width: 720px) {
+  .ant-card {
+    width: 43em;
+  }
+  .event-heading {
+    font-size: 2em;
+  }
+}
+
+@media only screen and (max-width: 615px) {
+  .ant-card {
+    width: 38em;
+  }
+}
+
+@media only screen and (max-width: 535px) {
+  .ant-card {
+    width: 35em;
+  }
+
+  .event-img {
+    width: 15em;
+  }
+}
+
+@media only screen and (max-width: 496px) {
+  .ant-card {
+    width: 32em;
+  }
+
+  .event-img {
+    width: 12em;
+  }
+}
+
+@media only screen and (max-width: 496px) {
+  .ant-card {
+    width: 29em;
+  }
+  .event-img {
+    width: 11em;
+  }
+}
+
+@media only screen and (max-width: 410px) {
+  .ant-card {
+    width: 27em;
+  }
+  .event-heading {
+    font-size: 1.5em;
+  }
+  .delete,
+  .edit {
+    margin-left: 0.5em;
+  }
+}
+
+@media only screen and (max-width: 380px) {
+  .ant-card {
+    width: 24em;
+  }
+  .my-events-buttons {
+    flex-direction: column;
+  }
+  .event-heading {
+    font-size: 1.2em;
+  }
+}
+
+@media only screen and (max-width: 330px) {
+  .ant-card {
+    width: 21em;
+  }
+
+  .view-more-button {
+    font-size: small;
+  }
+  .event-heading {
+    font-size: 1em;
+  }
+  .details {
+    margin-left: 0;
+  }
+}
+
+@media only screen and (max-width: 720px) {
+  .delete-edit-icons {
+    display: block;
+  }
+
+  .delete-button,
+  .edit-button {
+    display: none;
+  }
 }

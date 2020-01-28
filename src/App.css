@@ -1,13 +1,16 @@
+*{
+	font-family: 'Montserrat', sans-serif;
+}
 header {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 }
 
-.header-button {
+/* .header-button {
 	margin: 10px;
 	/* padding: 8px; */
-}
+/* }
 h1 {
 	font-family: 'Cookie', cursive;
 	color: #f13a59;
@@ -15,9 +18,9 @@ h1 {
 	font-size: xx-large;
 	margin-left:5px;
 	margin-top:2px;
-}
+} */
 
-.layout-style {
+/* .layout-style {
 	background-color: white !important;
 	min-height: 100vh !important;
 }
@@ -44,8 +47,8 @@ img {
 
 .events-list h1 {
 	font-size: 50px;
-	text-decoration: underline;
-}
+	text-decoration: underline; */
+/* }
 
 .sign-up {
 	background-color: #f13a59;
@@ -60,4 +63,4 @@ img {
 
 .sign-up:hover{
 	cursor: pointer;
-}
+}  */
