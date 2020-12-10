@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/alizaLakhani14/Event-Mangement-App/static/css/main.a133fcd7.chunk.css",
-    "main.js": "/alizaLakhani14/Event-Mangement-App/static/js/main.7f5c8772.chunk.js",
-    "main.js.map": "/alizaLakhani14/Event-Mangement-App/static/js/main.7f5c8772.chunk.js.map",
-    "runtime-main.js": "/alizaLakhani14/Event-Mangement-App/static/js/runtime-main.275e7810.js",
-    "runtime-main.js.map": "/alizaLakhani14/Event-Mangement-App/static/js/runtime-main.275e7810.js.map",
-    "static/css/2.a4322ac3.chunk.css": "/alizaLakhani14/Event-Mangement-App/static/css/2.a4322ac3.chunk.css",
-    "static/js/2.9c6fb8df.chunk.js": "/alizaLakhani14/Event-Mangement-App/static/js/2.9c6fb8df.chunk.js",
-    "static/js/2.9c6fb8df.chunk.js.map": "/alizaLakhani14/Event-Mangement-App/static/js/2.9c6fb8df.chunk.js.map",
-    "index.html": "/alizaLakhani14/Event-Mangement-App/index.html",
-    "static/css/2.a4322ac3.chunk.css.map": "/alizaLakhani14/Event-Mangement-App/static/css/2.a4322ac3.chunk.css.map",
-    "static/css/main.a133fcd7.chunk.css.map": "/alizaLakhani14/Event-Mangement-App/static/css/main.a133fcd7.chunk.css.map",
-    "static/js/2.9c6fb8df.chunk.js.LICENSE.txt": "/alizaLakhani14/Event-Mangement-App/static/js/2.9c6fb8df.chunk.js.LICENSE.txt"
+    "main.css": "/Event-Mangement-App/static/css/main.a133fcd7.chunk.css",
+    "main.js": "/Event-Mangement-App/static/js/main.1cc83b6e.chunk.js",
+    "main.js.map": "/Event-Mangement-App/static/js/main.1cc83b6e.chunk.js.map",
+    "runtime-main.js": "/Event-Mangement-App/static/js/runtime-main.5d819ddf.js",
+    "runtime-main.js.map": "/Event-Mangement-App/static/js/runtime-main.5d819ddf.js.map",
+    "static/css/2.a4322ac3.chunk.css": "/Event-Mangement-App/static/css/2.a4322ac3.chunk.css",
+    "static/js/2.c83f05b6.chunk.js": "/Event-Mangement-App/static/js/2.c83f05b6.chunk.js",
+    "static/js/2.c83f05b6.chunk.js.map": "/Event-Mangement-App/static/js/2.c83f05b6.chunk.js.map",
+    "index.html": "/Event-Mangement-App/index.html",
+    "static/css/2.a4322ac3.chunk.css.map": "/Event-Mangement-App/static/css/2.a4322ac3.chunk.css.map",
+    "static/css/main.a133fcd7.chunk.css.map": "/Event-Mangement-App/static/css/main.a133fcd7.chunk.css.map",
+    "static/js/2.c83f05b6.chunk.js.LICENSE.txt": "/Event-Mangement-App/static/js/2.c83f05b6.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.275e7810.js",
+    "static/js/runtime-main.5d819ddf.js",
     "static/css/2.a4322ac3.chunk.css",
-    "static/js/2.9c6fb8df.chunk.js",
+    "static/js/2.c83f05b6.chunk.js",
     "static/css/main.a133fcd7.chunk.css",
-    "static/js/main.7f5c8772.chunk.js"
+    "static/js/main.1cc83b6e.chunk.js"
   ]
 }
