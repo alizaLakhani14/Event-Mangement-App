@@ -67,7 +67,9 @@
 .edit {
   color: blue;
 }
-
+.ant-card-body {
+  height: 20em;
+}
 @media only screen and (max-width: 720px) {
   .ant-card {
     width: 43em;

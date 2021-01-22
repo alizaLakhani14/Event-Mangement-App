@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import PlacesAutocomplete, {
   geocodeByAddress,
-  getLatLng
+  getLatLng,
 } from "react-places-autocomplete";
 import { Input } from "antd";
 import { connect } from "react-redux";
@@ -11,10 +11,10 @@ const PlacesInput = ({ setFieldValue, placesField }, props) => {
   const [address, setAddress] = React.useState("");
   const [coordinates, setCoordinates] = React.useState({
     lat: null,
-    lng: null
+    lng: null,
   });
 
-  const handleSelect = async value => {
+  const handleSelect = async (value) => {
     console.log(value);
     const results = await geocodeByAddress(value);
     const latLng = await getLatLng(results[0]);
@@ -24,12 +24,9 @@ const PlacesInput = ({ setFieldValue, placesField }, props) => {
     setFieldValue("places", latLng);
   };
 
-  const handleChange = address => {
+  const handleChange = (address) => {
     setAddress(address);
   };
-  // const handleClick = value => {
-  //   setAddress(value);
-  // };
   return (
     <div>
       <PlacesAutocomplete
@@ -41,20 +38,42 @@ const PlacesInput = ({ setFieldValue, placesField }, props) => {
           <>
             <Input
               style={{
-                height: "32px"
+                height: "32px",
               }}
               {...getInputProps({
-                placeholder: "Type your address"
+                placeholder: "Type your address",
               })}
             ></Input>
             <div>{loading ? <div>...loading</div> : null}</div>
-            {suggestions.map(suggestion => {
+            {suggestions.map((suggestion) => {
+              const className = suggestion.active
+                ? "suggestion-item--active"
+                : "suggestion-item";
+              const style = suggestion.active
+                ? {
+                    backgroundColor: "#fafafa",
+                    cursor: "pointer",
+                    padding: "5px",
+                    borderBottom: "1px solid #d9d9d9",
+                    borderLeft: "1px solid #d9d9d9",
+                    borderRight: "1px solid #d9d9d9",
+                  }
+                : {
+                    backgroundColor: "#ffffff",
+                    cursor: "pointer",
+                    padding: "5px",
+                    borderBottom: "1px solid #d9d9d9",
+                    borderLeft: "1px solid #d9d9d9",
+                    borderRight: "1px solid #d9d9d9",
+                  };
               return (
                 <div
-                  
-                  {...getSuggestionItemProps}
+                  {...getSuggestionItemProps(suggestion, {
+                    className,
+                    style,
+                  })}
                 >
-                  {suggestion.description}
+                  <span>{suggestion.description}</span>
                 </div>
               );
             })}
@@ -65,9 +84,9 @@ const PlacesInput = ({ setFieldValue, placesField }, props) => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    fetchedValues: state.updateEvent[0]
+    fetchedValues: state.updateEvent[0],
   };
 };
 export default connect(mapStateToProps)(PlacesInput);

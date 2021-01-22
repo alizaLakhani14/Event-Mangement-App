@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Card, Button, Icon } from "antd";
+import { Card } from "antd";
 import "./EventList.css";
 import { useFirestoreConnect } from "react-redux-firebase";
 import { NavLink } from "react-router-dom";
@@ -19,7 +19,7 @@ const EventList = props => {
             <p>{event.description}</p>
             <NavLink to={`event/${event.id}`}>
               <button className="view-more">
-                View More <Icon type="arrow-right" className="view-more-icon" />{" "}
+                View More
               </button>
             </NavLink>
           </div>

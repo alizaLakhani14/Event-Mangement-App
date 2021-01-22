@@ -6,7 +6,7 @@ import EventDetailMap from "./EventDetailMap";
 import "./EventDetail.css";
 import Header from "./../../components/Header/Header";
 
-const EventDetail = props => {
+const EventDetail = (props) => {
   const [isVisible, setVisibility] = React.useState(false);
 
   const toggleVisibilityButoon = () => {
@@ -23,7 +23,7 @@ const EventDetail = props => {
         <div className="img-name">
           <Carousel autoplay>
             {props.event.images &&
-              props.event.images.map(image => (
+              props.event.images.map((image) => (
                 <img src={image} alt="img" className="event-detail-img" />
               ))}
           </Carousel>
@@ -33,25 +33,40 @@ const EventDetail = props => {
               <h1 className="event-name-heading ">{props.event.name}</h1>
             </div>
 
-            <div className="contact-info">
-              <Icon
-                type="phone"
-               className='event-detail-icon'
-              />
+            <div className="detail-field">
+              <div>
+                <span>
+                  <Icon type="phone" className="event-detail-icon" />
+                </span>
+                <span style={{ fontSize: "18px", color: "#637d96" }}>
+                  Contact:
+                </span>
+              </div>
+
               <span className="event-span">{props.event.contactNumber}</span>
             </div>
-            <div>
-              <Icon
-                type="user"
-                className='event-detail-icon'
-              />
+            <div className="detail-field">
+              <div>
+                <span>
+                  <Icon type="user" className="event-detail-icon" />
+                </span>
+                <span style={{ fontSize: "18px", color: "#637d96" }}>
+                  Maximum Members:
+                </span>
+              </div>
               <span className="event-span">{props.event.maxMembers}</span>
             </div>
-            <div>
-              <Icon
-                type="tag"
-                className='event-detail-icon'
-              />
+            <div className="detail-field">
+              <div>
+                <span>
+                  {" "}
+                  <Icon type="tag" className="event-detail-icon" />
+                </span>
+                <span style={{ fontSize: "18px", color: "#637d96" }}>
+                  Ticket:
+                </span>
+              </div>
+
               <span className="event-span">{`${props.event.price} Rs`}</span>
             </div>
             <div className="event-description-div">
@@ -79,10 +94,12 @@ const EventDetail = props => {
 const mapStateToProps = (state, ownProps) => {
   const events = state.firestore.ordered.Events;
   const id = ownProps.match.params.id;
-  const event = events ? events.filter(event => event.id === id)[0] : "loading";
+  const event = events
+    ? events.filter((event) => event.id === id)[0]
+    : "loading";
 
   return {
-    event
+    event,
   };
 };
 export default connect(mapStateToProps)(EventDetail);

@@ -136,7 +136,6 @@ const CreateEvent = props => {
                   )}
                 </button>
               </div>
-              {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
             </form>
             <div className="error-div">
               {props.error === true && (

@@ -8,10 +8,8 @@
   margin-left: auto;
   margin-right: auto;
   margin-top: 3em;
-  background-color: white;
   padding: 5px;
-  box-shadow: 0 4px 10px 0 rgba(22, 21, 55, 0.03), 0 0 10px 0 rgba(22, 21, 55, 0.02);
-  border-radius: 3px;
+  border-radius: 5px;
 }
 
 .event-details-div {
@@ -22,8 +20,7 @@
 
 .event-details-div > * {
   margin: 0;
- padding: 1em 5px;
-  /* border-bottom: 0.5px solid rgba(0, 0, 0, 0.65); */
+  padding: 1em 5px;
 }
 
 .event-detail-img {
@@ -43,8 +40,7 @@
 }
 
 .event-span {
-  font-size: 23px;
-  margin: 2px;
+  font-size: 18px;
   color: rgba(0, 0, 0, 0.65);
   margin-left: 8px;
 }
@@ -69,7 +65,7 @@
 }
 
 .show-map-btn {
-  background-color:#637d96 ;
+  background-color: #637d96;
   color: white;
   border: none;
   border-radius: 3px;
@@ -85,18 +81,23 @@
 
 .event-detail-icon {
   color: #637d96;
-  font-size: 1.5em;
+  font-size: 18px;
+  margin-right: 3px;
 }
 
-
 @media only screen and (max-width: 900px) {
-  .event-detail-div{
+  .event-detail-div {
     width: 70%;
   }
 }
 
 @media only screen and (max-width: 425px) {
-  .event-detail-div{
+  .event-detail-div {
     width: 80%;
   }
+}
+
+
+.detail-field{
+  display: flex;
 }
