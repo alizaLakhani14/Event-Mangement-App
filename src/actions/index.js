@@ -1,19 +1,19 @@
 import firebase from "firebase/app";
 
-export const createEvent = event => {
+export const createEvent = (event) => {
   return (dispatch, getFirebase, getState) => {
     dispatch({ type: "LOADING", payload: true });
     const firestore = firebase.firestore();
     firestore
       .collection("Events")
       .add({
-        ...event
+        ...event,
       })
       .then(() => {
         dispatch({ type: "CREATE_EVENT", event });
         dispatch({ type: "LOADING", payload: false });
       })
-      .catch(err => {
+      .catch((err) => {
         // dispatch({ type: "ERROR", err });
         dispatch({ type: "ERROR_CATCHED", payload: true });
         setTimeout(() => {
@@ -23,17 +23,17 @@ export const createEvent = event => {
   };
 };
 
-export const deleteEvent = e => {
+export const deleteEvent = (e) => {
   return (dispatch, getFirebase, getState) => {
     const firestore = firebase.firestore();
     firestore
       .collection("Events")
       .doc(e.id)
       .delete()
-      .then(res => {
+      .then((res) => {
         dispatch({ type: "DELETED" });
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch({ type: "ERROR_CATCHED", payload: true });
         setTimeout(() => {
           dispatch({ type: "ERROR_CATCHED", payload: false });
@@ -64,13 +64,13 @@ export const updateValues = (
         price,
         maxMembers,
         contactNumber,
-        places
+        places,
       })
       .then(() => {
         dispatch({ type: "LOADING", payload: false });
         history.push("/MyEvents");
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch({ type: "ERROR_CATCHED", payload: true });
         setTimeout(() => {
           dispatch({ type: "ERROR_CATCHED", payload: false });
@@ -80,10 +80,10 @@ export const updateValues = (
 };
 
 export const fetchValues = (id, events) => {
-  return dispatch => {
+  return (dispatch) => {
     return new Promise((resolve, reject) => {
       try {
-        let values = events.filter(event => event.id === id);
+        let values = events.filter((event) => event.id === id);
         if (values.length > 0) {
           dispatch({ type: "FETCHED_VALUES", payload: values });
           return resolve(values);
@@ -105,9 +105,7 @@ export const signIn = (credentials, history) => {
         dispatch({ type: "LOGIN_SUCCESS" });
         history.push("/homePage");
       })
-      .catch(err => {
-        console.log(err);
-        // dispatch({ type: "LOGIN_ERROR", err });
+      .catch((err) => {
         dispatch({ type: "ERROR_CATCHED", payload: true });
         setTimeout(() => {
           dispatch({ type: "ERROR_CATCHED", payload: false });
@@ -125,7 +123,7 @@ export const signOut = () => {
       .then(() => {
         dispatch({ type: "SIGNOUT_SUCCESS" });
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch({ type: "ERROR_CATCHED", payload: true });
         setTimeout(() => {
           dispatch({ type: "ERROR_CATCHED", payload: false });
@@ -136,29 +134,23 @@ export const signOut = () => {
 
 export const register = (newUser, history) => {
   return (dispatch, getState, getFirebase, getFirestore) => {
-    console.log("fdsfds", history);
     const firebase = getFirebase();
     const firestore = firebase.firestore();
     return firebase
       .auth()
       .createUserWithEmailAndPassword(newUser.email, newUser.password)
-      .then(res => {
+      .then((res) => {
         console.log(res, "resss");
-        return firestore
-          .collection("users")
-          .doc(res.user.uid)
-          .set({
-            name: newUser.name,
-            contact: newUser.contact
-            // id: newUser.uid
-          });
+        return firestore.collection("users").doc(res.user.uid).set({
+          name: newUser.name,
+          contact: newUser.contact,
+        });
       })
       .then(() => {
         dispatch({ type: "SIGNUP_SUCCESS" });
         history.push("/homePage");
-        
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch({ type: "ERROR_CATCHED", payload: true });
         setTimeout(() => {
           dispatch({ type: "ERROR_CATCHED", payload: false });
@@ -167,21 +159,21 @@ export const register = (newUser, history) => {
   };
 };
 
-export const signInWithGoogle = parameter => {
+export const signInWithGoogle = (parameter) => {
   return (dispatch, getState, getFirebase) => {
     const firebase = getFirebase();
 
     firebase
       .login({
         provider: "google",
-        type: "popup"
+        type: "popup",
       })
-      .then(res => {
+      .then((res) => {
         console.log("res", res);
         dispatch({ type: "SIGNED_IN_WITH_GOOGLE" });
-        parameter.push("/homePage");
       })
-      .catch(err => {
+      .then(() => parameter.push("/homePage"))
+      .catch((err) => {
         dispatch({ type: "ERROR_CATCHED", payload: true });
         setTimeout(() => {
           dispatch({ type: "ERROR_CATCHED", payload: false });
@@ -220,11 +212,11 @@ const uploadImages = (files, name, firebase, dispatch) => {
 
         uploadTask.on(
           "state_changed",
-          snapshot => {
+          (snapshot) => {
             console.log(snapshot);
             dispatch({ type: "PROGRESS", payload: "progressing" });
           },
-          error => {
+          (error) => {
             console.log(error);
             reject(error);
           },
