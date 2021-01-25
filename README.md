@@ -1,1 +1,1 @@
-Deployed At : https://alizalakhani14.github.io/Event-Mangement-App/
+Deployed At : https://event-management-app.netlify.app/
