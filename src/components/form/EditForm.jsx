@@ -7,11 +7,12 @@ import "./CreateEvent.css";
 import { connect } from "react-redux";
 import { updateValues, uploadImage } from "./../../actions";
 import PlacesInput from "./PlacesInput";
+import Header from './../Header/Header';
 
 const CreateEvent = props => {
   let history = useHistory();
 
-  console.log(props, "props");
+ 
 
   let uploader;
   const imageUpload = file => {
@@ -53,7 +54,7 @@ const CreateEvent = props => {
         setFieldValue
       }) => (
         <>
-          <h1 className="create-event-heading">Edit Event</h1>
+        <Header/>
           <div className="form-container">
             <form className="form" onSubmit={handleSubmit}>
               <div className="form-field">

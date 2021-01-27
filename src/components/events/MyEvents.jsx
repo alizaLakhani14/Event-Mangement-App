@@ -12,7 +12,7 @@ const MyEvents = props => {
   let history = useHistory();
   let myEvents;
   useFirestoreConnect([{ collection: "Events" }]);
-  console.log(props.events, "events");
+ 
 
   myEvents = props.events
     ? props.events.filter(event => event.creator === props.user)

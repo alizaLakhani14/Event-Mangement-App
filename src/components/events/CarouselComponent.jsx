@@ -3,7 +3,6 @@ import { Carousel } from "antd";
 import { connect } from "react-redux";
 
 const CarouselComponent = props => {
-    c
   return <div></div>;
 };
 const mapStateToProps = state => {

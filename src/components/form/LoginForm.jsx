@@ -17,8 +17,6 @@ const validationSchema = Yup.object().shape({
 
 const LoginForm = props => {
   let history = useHistory();
-  console.log(props);
-  console.log("component appeared");
   return (
     <div>
       <Formik

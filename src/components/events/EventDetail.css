@@ -1,103 +1,103 @@
 .detailPage {
-  background-color: #f0f2f5;
-  padding-bottom: 2em;
+    background-color: #f0f2f5;
+    padding-bottom: 2em;
+    min-height: 100vh
 }
+
 .event-detail-div {
-  /* border: 1px solid black; */
-  width: 50%;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 3em;
-  padding: 5px;
-  border-radius: 5px;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3em;
+    padding: 5px;
+    border-radius: 5px;
 }
 
 .event-details-div {
-  display: flex;
-  flex-direction: column;
-  margin-top: 1em;
+    display: flex;
+    flex-direction: column;
+    margin-top: 1em;
 }
 
-.event-details-div > * {
-  margin: 0;
-  padding: 1em 5px;
+.event-details-div>* {
+    margin: 0;
+    padding: 1em 5px;
 }
 
 .event-detail-img {
-  width: 1102px;
-  height: 32em;
+    width: 1102px;
+    height: 32em;
 }
 
 .img-name {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 .event-name-heading {
-  color: #4f4556;
-  font-size: 40px;
-  margin: 0;
+    color: #4f4556;
+    font-size: 40px;
+    margin: 0;
 }
 
 .event-span {
-  font-size: 18px;
-  color: rgba(0, 0, 0, 0.65);
-  margin-left: 8px;
+    font-size: 18px;
+    color: rgba(0, 0, 0, 0.65);
+    margin-left: 8px;
 }
 
 .event-description {
-  margin: 0;
-  max-width: 100%;
-  font-size: 17px;
-  color: rgba(0, 0, 0, 0.65);
+    margin: 0;
+    max-width: 100%;
+    font-size: 17px;
+    color: rgba(0, 0, 0, 0.65);
 }
 
 .ticket-price {
-  font-size: xx-large;
-  margin-top: 1em;
-  font-weight: normal;
-  color: #000000a6;
+    font-size: xx-large;
+    margin-top: 1em;
+    font-weight: normal;
+    color: #000000a6;
 }
 
 .map div {
-  margin: 0 !important;
-  width: 100% !important;
+    margin: 0 !important;
+    width: 100% !important;
 }
 
 .show-map-btn {
-  background-color: #637d96;
-  color: white;
-  border: none;
-  border-radius: 3px;
-  height: 32px;
-  padding: 0 15px;
-  outline: none;
+    background-color: #637d96;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    height: 32px;
+    padding: 0 15px;
+    outline: none;
 }
 
 .ant-carousel .slick-slide {
-  height: 32em !important;
-  /* width: 45em !important; */
+    height: 32em !important;
+    /* width: 45em !important; */
 }
 
 .event-detail-icon {
-  color: #637d96;
-  font-size: 18px;
-  margin-right: 3px;
+    color: #637d96;
+    font-size: 18px;
+    margin-right: 3px;
 }
 
 @media only screen and (max-width: 900px) {
-  .event-detail-div {
-    width: 70%;
-  }
+    .event-detail-div {
+        width: 70%;
+    }
 }
 
 @media only screen and (max-width: 425px) {
-  .event-detail-div {
-    width: 80%;
-  }
+    .event-detail-div {
+        width: 80%;
+    }
 }
 
-
-.detail-field{
-  display: flex;
+.detail-field {
+    display: flex;
 }

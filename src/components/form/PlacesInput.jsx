@@ -15,12 +15,10 @@ const PlacesInput = ({ setFieldValue, placesField }, props) => {
   });
 
   const handleSelect = async (value) => {
-    console.log(value);
     const results = await geocodeByAddress(value);
     const latLng = await getLatLng(results[0]);
     setAddress(value);
     setCoordinates(latLng);
-    console.log(latLng);
     setFieldValue("places", latLng);
   };
 
@@ -46,6 +44,7 @@ const PlacesInput = ({ setFieldValue, placesField }, props) => {
             ></Input>
             <div>{loading ? <div>...loading</div> : null}</div>
             {suggestions.map((suggestion) => {
+              console.log(suggestion)
               const className = suggestion.active
                 ? "suggestion-item--active"
                 : "suggestion-item";
@@ -72,7 +71,9 @@ const PlacesInput = ({ setFieldValue, placesField }, props) => {
                     className,
                     style,
                   })}
+               
                 >
+                
                   <span>{suggestion.description}</span>
                 </div>
               );

@@ -63,7 +63,7 @@ const Header = props => {
                     Sign In
                   </button>
                 </NavLink>
-                ;{" "}
+                {" "}
                 <NavLink to="/register">
                   <button className="header-button sign-up">Register</button>
                 </NavLink>

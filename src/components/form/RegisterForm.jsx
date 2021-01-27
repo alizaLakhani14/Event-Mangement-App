@@ -29,8 +29,6 @@ const validationSchema = Yup.object().shape({
 });
 
 const RegisterForm = props => {
-  // let history = useHistory();
-  // console.log(history, "history ");
   return (
     <>
       <Formik

@@ -6,7 +6,6 @@ import { useFirestoreConnect } from "react-redux-firebase";
 import { NavLink } from "react-router-dom";
 
 const EventList = props => {
-  console.log(props);
   useFirestoreConnect([{ collection: "Events" }]);
   let eventList =
     props.events &&

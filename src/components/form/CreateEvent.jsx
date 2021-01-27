@@ -10,9 +10,7 @@ import PlacesInput from "./PlacesInput";
 import Header from "./../Header/Header";
 
 const CreateEvent = props => {
-  // let history = useHistory();
-
-  console.log(props, "props");
+  
 
   let uploader;
   const imageUpload = file => {
